@@ -10,7 +10,15 @@ const getUnaCategoriaPorId = async (id) => {
     return (consulta[0].length === 0) ? null : consulta[0][0];
 }
 
+const getIdCategoriaPorSlug = async (slug) => {
+    const consulta = await poolSQL.query(
+        "select id from categoria where slug = ?",
+        [slug]);
+    return consulta[0];
+}
+
 module.exports = {
     getAllCategorias,
-    getUnaCategoriaPorId
+    getUnaCategoriaPorId, 
+    getIdCategoriaPorSlug
 };

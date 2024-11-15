@@ -7,5 +7,53 @@ GET {{host}}/api/categorias
 ### GET una categoria por id
 GET {{host}}/api/categorias/5
 
+### ----------------------Peticiones NOTICIAS------------
 ###
-GET {{host}}/api/noticias/1
+GET {{host}}/api/noticias/5
+
+###
+GET {{host}}/api/noticias/usuarios/2
+
+###
+GET {{host}}/api/noticias/?seccion=secundario&categoria=deportes
+
+###
+POST {{host}}/api/noticias
+Content-Type: application/json
+
+{
+  "titular": "Los españoles vuelven a la montaña",
+  "imagen": "https://img.freepik.com/fotos-premium/montanas-georgia-rios-montana_73944-8400.jpg",
+  "texto": "El nuevo destino turístico para los españoles es la montaña, superando por primera vez a la playa",
+  "secciones": "destacado",
+  "fecha_publicacion": "2024-10-29",
+  "redactor_id": 1,
+  "editor_id": 4,
+  "categoria_id": 5,
+  "estado": "borrador",
+  "importancia": 10,
+  "cambios": null,
+  "slug": "turismo-montana-economia-nueva"
+}
+
+###
+PUT {{host}}/api/noticias/18
+Content-Type: application/json
+
+{
+  "titular": "Los españoles nunca van a la montaña",
+  "imagen": "https://img.freepik.com/fotos-premium/montanas-georgia-rios-montana_73944-8400.jpg",
+  "texto": "El viejo destino turístico para los españoles es la montaña, superando por primera vez a la playa",
+  "secciones": "destacado",
+  "fecha_publicacion": "2024-10-29",
+  "redactor_id": 1,
+  "editor_id": 4,
+  "categoria_id": 5,
+  "estado": "borrador",
+  "importancia": 10,
+  "cambios": null,
+  "slug": "turismo-montana"
+}
+
+###
+DELETE {{host}}/api/noticias/18

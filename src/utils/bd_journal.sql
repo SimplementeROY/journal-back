@@ -116,3 +116,42 @@ ENGINE = InnoDB;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+
+INSERT INTO `cms_periodico`.`usuarios` (`nombre`, `email`, `contraseña`, `rol`)
+VALUES
+('Juan Pérez', 'juan.perez@example.com', 'hashed_password', 'redactor'),
+('Ana López', 'ana.lopez@example.com', 'hashed_password', 'editor'),
+('Carlos Ruiz', 'carlos.ruiz@example.com', 'hashed_password', 'redactor'),
+('María Gómez', 'maria.gomez@example.com', 'hashed_password', 'editor'),
+('Pedro Díaz', 'pedro.diaz@example.com', 'hashed_password', 'redactor');
+
+
+INSERT INTO `cms_periodico`.`categoria` (`nombre`, `slug`)
+VALUES
+('Tecnología', 'tecnologia'),
+('Deportes', 'deportes'),
+('Cine', 'cine'),
+('Educación', 'educacion'),
+('Economía', 'economia'),
+('Arte', 'arte');
+
+
+INSERT INTO `cms_periodico`.`noticias` 
+(`titular`, `imagen`, `texto`, `secciones`, `fecha_publicacion`, `redactor_id`, `editor_id`, `categoria_id`, `estado`, `importancia`, `cambios`, `slug`)
+VALUES
+('Nueva tecnología en 2024', 'https://loremflickr.com/800/600/technology', 'Un avance en la tecnología ha sido presentado...', 'principal', '2024-11-01', 1, 2, 1, 'publicado', 85, NULL, 'nueva-tecnologia-2024'),
+('Deportes extremos: tendencia global', 'https://loremflickr.com/800/600/sports', 'Los deportes extremos están ganando popularidad...', 'secundario', '2024-10-15', 3, 4, 2, 'revision', 62, NULL, 'deportes-extremos'),
+('Películas más esperadas del año', 'https://loremflickr.com/800/600/cinema', 'Las películas que han generado mayor expectativa...', 'destacado', '2024-11-10', 5, 2, 3, 'publicado', 73, NULL, 'peliculas-esperadas-2024'),
+('Reforma educativa en proceso', 'https://loremflickr.com/800/600/education', 'Un análisis detallado sobre los cambios propuestos...', 'principal', '2024-09-20', 1, 4, 4, 'borrador', 45, NULL, 'reforma-educativa-proceso'),
+('Clima extremo afecta la economía', 'https://loremflickr.com/800/600/climate', 'Los recientes fenómenos climáticos extremos...', 'destacado', '2024-08-10', 3, 2, 5, 'publicado', 92, NULL, 'clima-extremo-economia'),
+('Descubrimientos espaciales sorprendentes', 'https://loremflickr.com/800/600/space', 'Científicos han detectado un nuevo exoplaneta...', 'secundario', '2024-07-30', 5, 4, 6, 'revision', 68, NULL, 'descubrimientos-espaciales'),
+('Crecimiento de startups tecnológicas', 'https://loremflickr.com/800/600/startup', 'El auge de las startups tecnológicas en 2024...', 'principal', '2024-11-12', 1, 2, 1, 'borrador', 50, NULL, 'crecimiento-startups-2024'),
+('Cambio cultural en las redes sociales', 'https://loremflickr.com/800/600/social-media', 'Un análisis sobre cómo las redes sociales...', 'secundario', '2024-06-15', 3, 4, 2, 'publicado', 77, NULL, 'cambio-cultural-redes'),
+('Salud mental en el trabajo', 'https://loremflickr.com/800/600/mental-health', 'La importancia de priorizar la salud mental...', 'destacado', '2024-04-25', 5, 2, 4, 'publicado', 88, NULL, 'salud-mental-trabajo'),
+('Innovación en transporte público', 'https://loremflickr.com/800/600/transport', 'Nuevos avances en transporte público sostenible...', 'principal', '2024-05-10', 1, 4, 3, 'revision', 39, NULL, 'innovacion-transporte'),
+('Explosión artística en 2024', 'https://loremflickr.com/800/600/art', 'Artistas emergentes están rompiendo barreras...', 'secundario', '2024-03-22', 3, 2, 6, 'borrador', 15, NULL, 'explosion-artistica-2024'),
+('Política internacional en foco', 'https://loremflickr.com/800/600/politics', 'Un análisis de las recientes tensiones geopolíticas...', 'destacado', '2024-02-17', 5, 4, 5, 'publicado', 79, NULL, 'politica-internacional'),
+('Economía global: proyecciones', 'https://loremflickr.com/800/600/economy', 'Expertos presentan sus proyecciones económicas...', 'principal', '2024-01-10', 1, 2, 1, 'revision', 99, NULL, 'economia-global-proyecciones'),
+('Educación digital en 2024', 'https://loremflickr.com/800/600/digital-education', 'El auge de la educación en línea...', 'secundario', '2024-09-05', 3, 4, 4, 'borrador', 42, NULL, 'educacion-digital-2024'),
+('Impacto ambiental de las ciudades', 'https://loremflickr.com/800/600/environment', 'Las ciudades están enfrentando retos ambientales...', 'destacado', '2024-10-01', 5, 2, 3, 'publicado', 65, NULL, 'impacto-ambiental-ciudades');
