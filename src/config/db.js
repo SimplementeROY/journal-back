@@ -5,7 +5,7 @@ const pool = mysql.createPool({
     host: process.env.URLDB,
     user: process.env.USUARIO,
     password: process.env.PASSWORD,
-    port: process.env.PORT,
+    port: process.env.PORTDB,
     database: process.env.NAMEDB
 });
 
