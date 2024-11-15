@@ -1,7 +1,7 @@
 {
-  "name": "express-init-template",
-  "version": "1.5.0",
-  "description": "This is a basic Express application template designed to help you create APIs quickly. It includes essential configurations and setup for starting an Express server.",
+  "name": "journal",
+  "version": "1.0.0",
+  "description": "Periodico digital",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
@@ -17,9 +17,13 @@
   "author": "Cristina Burgos | Jaime Pavón | Fernando Rodríguez | Melvin Roy | Álvaro Tercero",
   "license": "MIT",
   "dependencies": {
+    "bcrypt": "^5.1.1",
     "cors": "^2.8.5",
+    "dayjs": "^1.11.13",
     "dotenv": "^16.3.1",
-    "express": "^4.18.2"
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.2",
+    "mysql2": "^3.11.4"
   },
   "devDependencies": {
     "@types/express": "^5.0.0",
