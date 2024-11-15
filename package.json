@@ -14,7 +14,7 @@
     "init",
     "template"
   ],
-  "author": "Mario Girón Martín",
+  "author": "Cristina Burgos | Jaime Pavón | Fernando Rodríguez | Melvin Roy | Álvaro Tercero",
   "license": "MIT",
   "dependencies": {
     "cors": "^2.8.5",
