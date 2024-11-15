@@ -6,3 +6,6 @@ GET {{host}}/api/categorias
 
 ### GET una categoria por id
 GET {{host}}/api/categorias/5
+
+###
+GET {{host}}/api/noticias/1
