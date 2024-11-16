@@ -20,20 +20,17 @@ const getNoticiasDeUsuario = async (req, res, next) => {
     try {
         const { idUsuario } = req.params;
         const usuario = await modelUsuarios.seleccionarUsuarioPorId(idUsuario);
-        if (usuario.rol === 'redactor') {
-            const resultado = await modelNoticias.seleccionarNoticiasDeRedactor(idUsuario);
-            if (resultado.length === 0) {
-                return res.status(404).json({ message: 'No se han encontrado noticias en la base de datos' });
-            }
-            return res.json(resultado);
-        } else if (usuario.rol === 'editor') {
-            const resultado = await modelNoticias.seleccionarNoticiasDeEditor(idUsuario);
-            if (resultado.length === 0) {
-                return res.status(404).json({ message: 'No se han encontrado noticias en la base de datos' });
-            }
-            return res.json(resultado);
+        if (!usuario) {
+            return res.status(403).json({ message: 'El usuario que buscas no existe' });
         }
-        return res.status(403).json({ message: 'Rol de usuario incorrecto' });
+
+        const rol = usuario.rol;
+        const resultado = await modelNoticias.seleccionarNoticiasPorUsuario(idUsuario, rol);
+        if (resultado.length === 0) {
+            return res.status(404).json({ message: 'No se han encontrado noticias en la base de datos' });
+        }
+        return res.json(resultado);
+
     } catch (error) {
         next(error);
     }
@@ -67,7 +64,7 @@ const postNoticia = async (req, res, next) => {
     }
 }
 
-const putNoticia = async (req, res, next) =>{
+const putNoticia = async (req, res, next) => {
     try {
         const { id } = req.params;
         const affectedRows = await modelNoticias.actualizarNoticia(id, req.body);
