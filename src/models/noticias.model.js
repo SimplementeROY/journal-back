@@ -8,29 +8,13 @@ const seleccionarNoticiaPorId = async (id) => {
     return resultado[0];
 }
 
-const seleccionarNoticiasPorUsuario = async (id, rol) => {
+const seleccionarNoticiasPorUsuario = async (id) => {
     const [resultado] = await poolSQL.query(
-        'select * from noticias where ' + rol + '_id = ? order by fecha_publicacion desc',
-        [id]
+        'select * from noticias where redactor_id = ? or editor_id = ? order by fecha_publicacion desc',
+        [id, id]
     );
     return resultado;
 }
-
-// const seleccionarNoticiasDeRedactor = async (idRedactor) => {
-//     const [resultado] = await poolSQL.query(
-//         'select * from noticias where redactor_id = ? order by fecha_publicacion desc', 
-//         [idRedactor]
-//     );
-//     return resultado;
-// }
-
-// const seleccionarNoticiasDeEditor = async (idEditor) => {
-//     const [resultado] = await poolSQL.query(
-//         'select * from noticias where editor_id = ? order by fecha_publicacion desc', 
-//         [idEditor]
-//     );
-//     return resultado;
-// }
 
 const seleccionarNoticiasPorSeccionCategoria = async (seccion, categoriaId) => {
     console.log('categoria ID', categoriaId)

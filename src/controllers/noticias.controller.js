@@ -21,16 +21,13 @@ const getNoticiasDeUsuario = async (req, res, next) => {
         const { idUsuario } = req.params;
         const usuario = await modelUsuarios.seleccionarUsuarioPorId(idUsuario);
         if (!usuario) {
-            return res.status(403).json({ message: 'El usuario que buscas no existe' });
+            return res.status(404).json({ message: 'El usuario no existe en la base de datos' });
         }
-
-        const rol = usuario.rol;
-        const resultado = await modelNoticias.seleccionarNoticiasPorUsuario(idUsuario, rol);
+        const resultado = await modelNoticias.seleccionarNoticiasPorUsuario(idUsuario);
         if (resultado.length === 0) {
             return res.status(404).json({ message: 'No se han encontrado noticias en la base de datos' });
         }
         return res.json(resultado);
-
     } catch (error) {
         next(error);
     }
