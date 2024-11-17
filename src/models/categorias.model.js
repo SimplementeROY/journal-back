@@ -19,6 +19,6 @@ const getIdCategoriaPorSlug = async (slug) => {
 
 module.exports = {
     getAllCategorias,
-    getUnaCategoriaPorId, 
+    getUnaCategoriaPorId,
     getIdCategoriaPorSlug
 };
