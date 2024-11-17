@@ -1,5 +1,7 @@
 const { json } = require("express");
-const { obtenerUsuarios, insertarUsuario, seleccionarUsuarioPorId, deleteUsuarioPorId, updateUsuarioPorId } = require("../models/usuarios.model.js");
+const bcrypt = require('bcrypt');
+const { obtenerUsuarios, insertarUsuario, seleccionarUsuarioPorId, deleteUsuarioPorId, updateUsuarioPorId, seleccionarUsuarioPorEmail } = require("../models/usuarios.model.js");
+const { crearToken } = require("../utils/helpers.js");
 
 // Obtener todos los usuarios
 const getUsuarios = async (req, res) => {
@@ -17,6 +19,8 @@ const getUsuarioPorId = async (req, res) => {
 // Registrar un usuario
 const registrarUsuario = async (req, res) => {
     try {
+        // Encriptamos la contraseña antes de enviarla
+        req.body.contraseña = await bcrypt.hash(req.body.contraseña, 10);
         const { nombre, email, contraseña, rol } = req.body;
         const usuario = await insertarUsuario({ nombre, email, contraseña, rol });
 
@@ -35,6 +39,27 @@ const registrarUsuario = async (req, res) => {
     } catch (error) {
         console.log(error);
         res.status(500).json({ mensaje: "Error al registrar el usuario" });
+    }
+}
+
+// Login de usuario
+const loginUsuario = async (req, res, next) => {
+    try {
+        const { email, contraseña } = req.body;
+        const usuario = await seleccionarUsuarioPorEmail(email);
+        if (!usuario) {
+            return res.status(401).json({ message: 'Email y/o password incorrectos' });
+        }
+        const mismoPassword = await bcrypt.compare(contraseña, usuario.contraseña);
+        if (!mismoPassword) {
+            return res.status(401).json({ message: 'Email y/o password incorrectos' });
+        }
+        res.json({
+            message: 'Bienvenido a CMS Noticias', 
+            token: crearToken(usuario)
+        });
+    } catch (error) {
+        next(error);
     }
 }
 
@@ -75,6 +100,7 @@ const eliminarUsuario = async (req, res) => {
 module.exports = {
     getUsuarios,
     registrarUsuario,
+    loginUsuario,
     actualizarUsuario,
     eliminarUsuario,
     getUsuarioPorId

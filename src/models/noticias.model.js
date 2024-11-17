@@ -55,18 +55,8 @@ const borrarNoticia = async (id) => {
 module.exports = {
     seleccionarNoticiaPorId,
     seleccionarNoticiasPorUsuario,
-    // seleccionarNoticiasDeRedactor,
-    // seleccionarNoticiasDeEditor,
     seleccionarNoticiasPorSeccionCategoria,
     insertarNoticia,
     actualizarNoticia,
     borrarNoticia
 };
-
-// seleccionarNoticiasPorSeccionCategoria
-// seleccionarNoticiaPorId
-// seleccionarNoticiasDeUsuario
-
-// insertarNoticia
-// actualizarNoticia
-// borrarNoticia

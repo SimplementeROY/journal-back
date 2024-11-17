@@ -2,13 +2,14 @@
 
 const express = require('express');
 const enrutador = express.Router();
-const { getUsuarios, registrarUsuario, actualizarUsuario, eliminarUsuario, getUsuarioPorId } = require("../../controllers/usuarios.controller.js");
+const { getUsuarios, registrarUsuario, actualizarUsuario, eliminarUsuario, getUsuarioPorId, loginUsuario } = require("../../controllers/usuarios.controller.js");
 
 
 enrutador.get("/", getUsuarios);
 enrutador.get("/:id", getUsuarioPorId);
 
 enrutador.post("/", registrarUsuario);
+enrutador.post("/login", loginUsuario);
 
 enrutador.put("/:id", actualizarUsuario);
 

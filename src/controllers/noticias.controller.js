@@ -95,11 +95,3 @@ const deleteNoticia = async (req, res, next) => {
 module.exports = {
     getNoticiaPorId, getNoticiasDeUsuario, getNoticiasPorSeccionCategoria, postNoticia, putNoticia, deleteNoticia
 };
-
-// getNoticiasPorSeccionCategoria
-// getNoticiaPorId
-// getNoticiasDeUsuario
-
-// postNoticia
-// putNoticia
-// deleteNoticia

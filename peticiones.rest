@@ -73,11 +73,19 @@ Content-Type: application/json
 
 {
   "nombre": "Pepito",
-  "email": "pepito@example.com",
+  "email": "pepitoabc@example.com",
   "contraseña": "123456",
   "rol": "editor"
 }
 
+### Login de usuario
+POST {{host}}/api/usuarios/login
+Content-Type: application/json
+
+{
+  "email": "pepitoabc@example.com",
+  "contraseña": "123456"
+}
 
 ### Actualizar un usuario  // Puede ser redactor o editor
 PUT {{host}}/api/usuarios/6
