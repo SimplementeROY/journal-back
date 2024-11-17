@@ -57,3 +57,38 @@ Content-Type: application/json
 
 ###
 DELETE {{host}}/api/noticias/18
+
+
+### ----------------------Peticiones USUARIOS------------  
+
+### Obtener todos los usuarios
+GET {{host}}/api/usuarios
+
+### Obtener un usuario por id
+GET {{host}}/api/usuarios/5
+
+### Registrar un usuario
+POST {{host}}/api/usuarios
+Content-Type: application/json
+
+{
+  "nombre": "Pepito",
+  "email": "pepito@example.com",
+  "contraseña": "123456",
+  "rol": "editor"
+}
+
+
+### Actualizar un usuario  // Puede ser redactor o editor
+PUT {{host}}/api/usuarios/6
+Content-Type: application/json
+
+{
+  "nombre": "pepito",
+  "email": "pepito@gmail.com",
+  "contraseña": "123456",
+  "rol": "redactor"
+}
+
+### Eliminar un usuario
+DELETE {{host}}/api/usuarios/7
