@@ -1,4 +1,7 @@
 @host = http://localhost:3000
+@tokenAdmin=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTMsIm5vbWJyZSI6ImFkbWluIiwiZW1haWwiOiJhZG1pbkBnbWFpbC5jb20iLCJyb2wiOiJhZG1pbiIsImlhdCI6MTczMTg3MDk3OX0.rZhmXH_lNeJp8g9g41dVAtG_C3zLz42-QWYczLL8xcE
+@tokenEditor = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTAsIm5vbWJyZSI6IkphaW1lIiwiZW1haWwiOiJqYWltZUBnbWFpbC5jb20iLCJyb2wiOiJlZGl0b3IiLCJpYXQiOjE3MzE4NzA4MzZ9.ODDSaTvbZQCYkdJSCUliwir_KDjXAyro2yt08E67sHY
+@tokenRedactor = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTIsIm5vbWJyZSI6InJlZGFjdG9yIiwiZW1haWwiOiJyZWRhY3RvckBnbWFpbC5jb20iLCJyb2wiOiJyZWRhY3RvciIsImlhdCI6MTczMTg3MDk5NH0.LpYHlIF4AGcdwy7l8TpzkVhlCF-l5gv1exXsI1bmMKU
 
 ### ----------------------Peticiones CATEGORIAS------------
 ### GET todas las categorias
@@ -20,6 +23,7 @@ GET {{host}}/api/noticias/?seccion=secundario&categoria=deportes
 ###
 POST {{host}}/api/noticias
 Content-Type: application/json
+Authorization: {{tokenRedactor}}
 
 {
   "titular": "Los españoles vuelven a la montaña",
@@ -63,40 +67,45 @@ DELETE {{host}}/api/noticias/18
 
 ### Obtener todos los usuarios
 GET {{host}}/api/usuarios
+Authorization: {{tokenRedactor}}
 
 ### Obtener un usuario por id
 GET {{host}}/api/usuarios/5
-
-### Registrar un usuario
-POST {{host}}/api/usuarios
-Content-Type: application/json
-
-{
-  "nombre": "Pepito",
-  "email": "pepitoabc@example.com",
-  "contraseña": "123456",
-  "rol": "editor"
-}
+Authorization: {{tokenRedactor}}
 
 ### Login de usuario
 POST {{host}}/api/usuarios/login
 Content-Type: application/json
 
 {
-  "email": "pepitoabc@example.com",
-  "contraseña": "123456"
+  "email": "redactor@gmail.com",
+  "contraseña": "1234"
+}
+
+### Registrar un usuario
+POST {{host}}/api/usuarios
+Content-Type: application/json
+Authorization: {{tokenRedactor}}
+
+{
+  "nombre": "admin",
+  "email": "admin@gmail.com",
+  "contraseña": "1234",
+  "rol": "admin"
 }
 
 ### Actualizar un usuario  // Puede ser redactor o editor
 PUT {{host}}/api/usuarios/6
 Content-Type: application/json
+Authorization: {{tokenRedactor}}
 
 {
-  "nombre": "pepito",
-  "email": "pepito@gmail.com",
-  "contraseña": "123456",
-  "rol": "redactor"
+  "nombre": "admin1",
+  "email": "admin@gmail.com",
+  "contraseña": "1234",
+  "rol": "admin"
 }
 
 ### Eliminar un usuario
 DELETE {{host}}/api/usuarios/7
+Authorization: {{tokenRedactor}}
