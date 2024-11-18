@@ -32,8 +32,20 @@ const updateSuscriptorPorId = (id, email) => {
     return result;
 }
 
+const activateSuscriptorPorId = (activo, id) => {
+    console.log("entro en activar: id: ", id, " activo: ", activo);
+
+    const result = poolSQL.query('UPDATE suscriptores SET activo=? WHERE id=?', [activo, id]);
+    return result;
+}
+
 const deleteSuscriptorPorId = (id) => {
     const result = poolSQL.query('DELETE FROM suscriptores WHERE id =?', [id]);
+    return result;
+}
+
+const deleteSuscriptorPorEmail = (email) => {
+    const result = poolSQL.query('DELETE FROM suscriptores WHERE email =?', [email]);
     return result;
 }
 
@@ -43,5 +55,7 @@ module.exports = {
     obtenerSuscriptores,
     insertarSuscriptor,
     deleteSuscriptorPorId,
-    updateSuscriptorPorId
+    deleteSuscriptorPorEmail,
+    updateSuscriptorPorId,
+    activateSuscriptorPorId
 };
