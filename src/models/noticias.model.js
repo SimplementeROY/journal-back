@@ -5,7 +5,7 @@ const seleccionarNoticiaPorId = async (id) => {
         'select * from noticias where id = ?',
         [id]
     );
-    return resultado[0];
+    return resultado;
 }
 
 const seleccionarNoticiasPorUsuario = async (id) => {
