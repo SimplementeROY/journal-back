@@ -19,7 +19,7 @@ const validarToken = async (req, res, next) => {
     }
     //Si tenemos token y es correcto buscamos la existencia del usuario
     const usuario = await seleccionarUsuarioPorId(tokenDescifrado.id)//en el token descifrado tenemos el nombre y el id del usuario
-    if (!usuario) return res.status().json({ mensaje: "El usuario no existe" });
+    if (!usuario) return res.status(404).json({ mensaje: "El usuario no existe" });
     //Ahora incrusto en la peticion TODO EL USUARIO que he buscado antes, me invento una nueva propiedad en req de modo que en cualquier lugar tendré el usuario que se ha logado
     req.usuarioIncrustado = usuario; //incrusto al req el usuario entero
     next();

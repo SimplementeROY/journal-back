@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS `cms_periodico`.`usuarios` (
   `nombre` VARCHAR(45) NOT NULL,
   `email` VARCHAR(150) NOT NULL,
   `contraseña` VARCHAR(255) NOT NULL,
-  `rol` ENUM("editor", "redactor") NOT NULL,
+  `rol` ENUM("admin", "editor", "redactor") NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE)
 ENGINE = InnoDB;
@@ -120,11 +120,12 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 
 INSERT INTO `cms_periodico`.`usuarios` (`nombre`, `email`, `contraseña`, `rol`)
 VALUES
-('Juan Pérez', 'juan.perez@example.com', 'hashed_password', 'redactor'),
-('Ana López', 'ana.lopez@example.com', 'hashed_password', 'editor'),
-('Carlos Ruiz', 'carlos.ruiz@example.com', 'hashed_password', 'redactor'),
-('María Gómez', 'maria.gomez@example.com', 'hashed_password', 'editor'),
-('Pedro Díaz', 'pedro.diaz@example.com', 'hashed_password', 'redactor');
+('Juan Pérez', 'juan.perez@example.com', '$2b$10$Pw3JzGhbmQaaBCEKQFBEvuh9XHUFjtnwnIiCEOmU/LsW0eCctr8uu', 'redactor'),
+('Ana López', 'ana.lopez@example.com', '$2b$10$qV9dQqNFGVux4A2LdzdN2eZX8iTUG4/oV25eLpYffO91Uegs8D/im', 'editor'),
+('Carlos Ruiz', 'carlos.ruiz@example.com', '$2b$10$Cavagk2WQdjFIqET5ON7r.rZTDYBTeaNpsx3s07AQlT8qRN0Vbv6S', 'redactor'),
+('María Gómez', 'maria.gomez@example.com', '$2b$10$JhfXr6aIhVhZspR0GhM9U.ySD8rhLiva4cs43aRhVYmmRdduEMIrW', 'editor'),
+('Pedro Díaz', 'pedro.diaz@example.com', '$2b$10$yw./zAo3/eshWDn8y8BfA.9I8Fd8Qs5Fnou.Bp/q4x3ffN.H/3NGi', 'redactor'),
+('Silvia Álvarez', 'silvia.alvarez@example.com', '$2b$10$SmVd8scHpdakJuLhV5lLou8qZIHSuGungDHkflxqyRfnrlgjUKntS', 'admin');
 
 
 INSERT INTO `cms_periodico`.`categoria` (`nombre`, `slug`)
