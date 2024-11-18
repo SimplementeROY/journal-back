@@ -22,13 +22,13 @@ const seleccionarSuscriptorPorEmail = async (email) => {
 }
 
 const insertarSuscriptor = async (email) => {
-    const [resultado] = await poolSQL.query('INSERT INTO suscriptores (email) VALUES (?)', [nombre]);
-    console.log(resultado);
+    const [resultado] = await poolSQL.query('INSERT INTO suscriptores (email) VALUES (?)', [email]);
+    console.log("RESULTADO: ", resultado);
     return resultado;
 }
 
 const updateSuscriptorPorId = (id, email) => {
-    const result = poolSQL.query('UPDATE suscriptores SET  email=? WHERE id=?', [email, id]);
+    const result = poolSQL.query('UPDATE suscriptores SET email=? WHERE id=?', [email, id]);
     return result;
 }
 

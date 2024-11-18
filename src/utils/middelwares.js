@@ -2,6 +2,7 @@ require('dotenv').config(); //libreria para traer variables de entorno
 const jwtokens = require("jsonwebtoken");
 const isemail = require("isemail");
 const { seleccionarUsuarioPorId, seleccionarUsuarioPorEmail } = require('../models/usuarios.model');
+const { seleccionarSuscriptorPorEmail } = require('../models/suscriptores.model');
 
 const validarToken = async (req, res, next) => {
     //comprobar si el token viene incluido en la cabecera Authorization

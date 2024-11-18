@@ -10,15 +10,23 @@ const getSuscriptores = async (req, res) => {
 
 const getSuscriptorPorId = async (req, res) => {
     const { id } = req.params;
-    const Suscriptor = await seleccionarSuscriptorPorId(id);
-    res.json(Suscriptor);
+    const suscriptor = await seleccionarSuscriptorPorId(id);
+    res.json(suscriptor);
+}
+
+const getSuscriptorPorEmail = async (req, res) => {
+    const { email } = req.params;
+    const suscriptor = await seleccionarSuscriptorPorEmail(email);
+    res.json(suscriptor);
 }
 
 const registrarSuscriptor = async (req, res) => {
     try {
         const { email } = req.body;
         const respuesta = await insertarSuscriptor(email);
-        const nuevoInsertado = await seleccionarSuscriptorPorId(respuerta.insertId);
+        console.log("RESPUESA: ", respuesta);
+
+        const nuevoInsertado = await seleccionarSuscriptorPorId(respuesta.insertId);
 
         res.status(201).json({
             mensaje: "Suscriptor registrado correctamente",
@@ -35,6 +43,10 @@ const actualizarSuscriptor = async (req, res) => {
     try {
         const id = req.params.id;
         const email = req.body.email;
+        const suscriptorFound = await seleccionarSuscriptorPorEmail(email);
+        if (suscriptorFound) {
+            return res.status(404).json({ mensaje: `No se puede actualizar el usuario, el correo ${email} ya está en uso por otro usuario.` });
+        }
         const result = await updateSuscriptorPorId(id, email);
 
         if (!result[0] || result[0].affectedRows !== 1) {
@@ -66,9 +78,9 @@ const eliminarSuscriptor = async (req, res) => {
 
 module.exports = {
     getSuscriptores,
+    getSuscriptorPorId,
+    getSuscriptorPorEmail,
     registrarSuscriptor,
-    loginSuscriptor,
     actualizarSuscriptor,
     eliminarSuscriptor,
-    getSuscriptorPorId
 }

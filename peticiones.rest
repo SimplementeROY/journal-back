@@ -37,12 +37,13 @@ Authorization: {{tokenRedactor}}
   "estado": "borrador",
   "importancia": 10,
   "cambios": null,
-  "slug": "turismo-montana-economia-nueva"
+  "slug": "turismo-montana-economia-nueva1"
 }
 
 ###
 PUT {{host}}/api/noticias/18
 Content-Type: application/json
+Authorization: {{tokenRedactor}}
 
 {
   "titular": "Los españoles nunca van a la montaña",
@@ -61,7 +62,7 @@ Content-Type: application/json
 
 ###
 DELETE {{host}}/api/noticias/18
-
+Authorization: {{tokenRedactor}}
 
 ### ----------------------Peticiones USUARIOS------------  
 
@@ -109,3 +110,33 @@ Authorization: {{tokenRedactor}}
 ### Eliminar un usuario
 DELETE {{host}}/api/usuarios/7
 Authorization: {{tokenRedactor}}
+
+### ----------------------Peticiones SUSCRIPTORES------------  
+
+### Obtener todos los suscriptores
+GET {{host}}/api/suscriptores
+
+### Obtener un suscriptor por id
+GET {{host}}/api/suscriptores/4
+
+### Obtener un suscriptor por email --> OJO /email/ 
+GET {{host}}/api/suscriptores/email/jaime@gmail.com
+
+### Registrar un suscriptor
+POST {{host}}/api/suscriptores
+Content-Type: application/json
+
+{
+  "email": "admin4@gmail.com"
+}
+
+### Actualizar un suscriptor  // Puede ser redactor o editor
+PUT {{host}}/api/suscriptores/1
+Content-Type: application/json
+
+{
+  "email": "admin1@gmail.com"
+}
+
+### Eliminar un suscriptor
+DELETE {{host}}/api/suscriptores/12
