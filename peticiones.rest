@@ -131,11 +131,11 @@ Content-Type: application/json
 }
 
 ### Actualizar un suscriptor  // Puede ser redactor o editor
-PUT {{host}}/api/suscriptores/1
+PUT {{host}}/api/suscriptores/2
 Content-Type: application/json
 
 {
-  "email": "admin1@gmail.com"
+  "email": "editor@gmail.com"
 }
 
 ### Eliminar un suscriptor
