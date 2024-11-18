@@ -17,10 +17,25 @@ const seleccionarNoticiasPorUsuario = async (id) => {
 }
 
 const seleccionarNoticiasPorSeccionCategoria = async (seccion, categoriaId) => {
-    console.log('categoria ID', categoriaId)
     const [resultado] = await poolSQL.query(
         'select * from noticias where secciones = ? and categoria_id = ? order by fecha_publicacion desc',
         [seccion, categoriaId]
+    );
+    return resultado;
+}
+
+const seleccionarNoticiasPorSeccion = async (seccion) => {
+    const [resultado] = await poolSQL.query(
+        'select * from noticias where secciones = ? order by fecha_publicacion desc',
+        [seccion]
+    );
+    return resultado;
+}
+
+const seleccionarNoticiaPorSlug = async (slug) => {
+    const [resultado] = await poolSQL.query(
+        'select * from noticias where slug = ? order by fecha_publicacion desc',
+        [slug]
     );
     return resultado;
 }
@@ -56,6 +71,8 @@ module.exports = {
     seleccionarNoticiaPorId,
     seleccionarNoticiasPorUsuario,
     seleccionarNoticiasPorSeccionCategoria,
+    seleccionarNoticiasPorSeccion,
+    seleccionarNoticiaPorSlug,
     insertarNoticia,
     actualizarNoticia,
     borrarNoticia
