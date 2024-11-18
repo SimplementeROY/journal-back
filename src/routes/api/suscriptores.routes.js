@@ -2,9 +2,10 @@
 
 const express = require('express');
 const enrutador = express.Router();
-const { getSuscriptores, registrarSuscriptor, actualizarSuscriptor, eliminarSuscriptor, getSuscriptorPorId, getSuscriptorPorEmail } = require("../../controllers/suscriptores.controller.js");
+const { getSuscriptores, registrarSuscriptor, actualizarSuscriptor, activarSuscriptor, eliminarSuscriptorPorId, eliminarSuscriptorPorEmail, getSuscriptorPorId, getSuscriptorPorEmail } = require("../../controllers/suscriptores.controller.js");
 const { validarExisteEmailSuscriptor } = require('../../utils/middelwares.js');
 
+enrutador.get("/activar/:id/:activo", activarSuscriptor);
 enrutador.get("/", getSuscriptores);
 enrutador.get("/email/:email", getSuscriptorPorEmail);
 enrutador.get("/:id", getSuscriptorPorId);
@@ -13,6 +14,7 @@ enrutador.post("/", validarExisteEmailSuscriptor, registrarSuscriptor);
 
 enrutador.put("/:id", actualizarSuscriptor);
 
-enrutador.delete("/:id", eliminarSuscriptor);
+enrutador.delete("/:id", eliminarSuscriptorPorId);
+enrutador.delete("/email/:email", eliminarSuscriptorPorEmail);
 
 module.exports = enrutador;
