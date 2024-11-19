@@ -5,6 +5,16 @@ const getAllCategorias = async () => {
     return consulta[0];
 }
 
+const getVariasCategorias = async (arrCategorias) => {
+    let listaCategorias = "";
+    for (categoria of arrCategorias) {
+        listaCategorias += " id=" + categoria + " OR";
+    }
+    listaCategorias = listaCategorias.slice(0, -2);
+    const consulta = await poolSQL.query(`select * from categoria WHERE ${listaCategorias};`);
+    return consulta[0];
+}
+
 const getUnaCategoriaPorId = async (id) => {
     const consulta = await poolSQL.query("SELECT * FROM categoria WHERE id=" + id);
     return (consulta[0].length === 0) ? null : consulta[0][0];
@@ -20,5 +30,6 @@ const getIdCategoriaPorSlug = async (slug) => {
 module.exports = {
     getAllCategorias,
     getUnaCategoriaPorId,
-    getIdCategoriaPorSlug
+    getIdCategoriaPorSlug,
+    getVariasCategorias
 };

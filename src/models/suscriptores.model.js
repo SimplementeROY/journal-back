@@ -1,4 +1,5 @@
 const poolSQL = require("../config/db.js");
+const { getVariasCategorias } = require("./categorias.model.js");
 
 const obtenerSuscriptores = async () => {
     const resultado = await poolSQL.query('SELECT * FROM suscriptores');
@@ -23,8 +24,23 @@ const seleccionarSuscriptorPorEmail = async (email) => {
 
 const insertarSuscriptor = async (email) => {
     const [resultado] = await poolSQL.query('INSERT INTO suscriptores (email) VALUES (?)', [email]);
-    console.log("RESULTADO: ", resultado);
     return resultado;
+}
+
+const insertarSuscriptorCategorias = async (idSuscriptor, categorias) => {
+    let bucleCategorias = "";
+    for (categoria of categorias) {
+        bucleCategorias += `(${idSuscriptor},${categoria}),`;
+    }
+    bucleCategorias = bucleCategorias.slice(0, -1);//eliminar la coma ultima sobrante
+    const [resultado] = await poolSQL.query(`INSERT INTO suscriptores_categoria (suscriptores_id, categoria_id) VALUES ${bucleCategorias}`);
+    //console.log("RESULTADO: ", resultado);
+    return resultado;
+}
+
+const eliminarSuscriptorCategorias = (idSuscriptor) => {
+    const result = poolSQL.query('DELETE FROM suscriptores_categoria WHERE suscriptores_id =?', [idSuscriptor]);
+    return result;
 }
 
 const updateSuscriptorPorId = (id, email) => {
@@ -33,8 +49,6 @@ const updateSuscriptorPorId = (id, email) => {
 }
 
 const activateSuscriptorPorId = (activo, id) => {
-    console.log("entro en activar: id: ", id, " activo: ", activo);
-
     const result = poolSQL.query('UPDATE suscriptores SET activo=? WHERE id=?', [activo, id]);
     return result;
 }
@@ -57,5 +71,7 @@ module.exports = {
     deleteSuscriptorPorId,
     deleteSuscriptorPorEmail,
     updateSuscriptorPorId,
-    activateSuscriptorPorId
+    activateSuscriptorPorId,
+    insertarSuscriptorCategorias,
+    eliminarSuscriptorCategorias
 };
