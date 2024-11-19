@@ -128,7 +128,7 @@ GET {{host}}/api/suscriptores/4
 ### Obtener un suscriptor por email --> OJO /email/ 
 GET {{host}}/api/suscriptores/email/jaime@gmail.com
 
-### Registrar un NUEVO suscriptor
+### Registrar un                              NUEVO suscriptor
 POST {{host}}/api/suscriptores
 Content-Type: application/json
 
@@ -141,15 +141,16 @@ Content-Type: application/json
 GET {{host}}/api/suscriptores/activar/33/1
 
 ### Actualizar un suscriptor 
-PUT {{host}}/api/suscriptores/30
+PUT {{host}}/api/suscriptores/51
 Content-Type: application/json
 
 {
-  "email": "jaimePavonp@gmail.com"
+  "email": "JaimePavonp@gmail.com",
+  "categorias":[1,4,5]
 }
 
 ### Eliminar un suscriptor POR ID  ---> OJO NO USAR ESTA
-DELETE {{host}}/api/suscriptores/31
+DELETE {{host}}/api/suscriptores/14
 
 ### Eliminar un suscriptor POR EMAIL
 DELETE {{host}}/api/suscriptores/email/jaimepavonp@gmail.com

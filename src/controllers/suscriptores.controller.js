@@ -1,4 +1,5 @@
-const { obtenerSuscriptores, insertarSuscriptor, seleccionarSuscriptorPorId, deleteSuscriptorPorId, deleteSuscriptorPorEmail, updateSuscriptorPorId, seleccionarSuscriptorPorEmail, activateSuscriptorPorId, insertarSuscriptorCategorias } = require("../models/suscriptores.model.js");
+const { getVariasCategorias } = require("../models/categorias.model.js");
+const { obtenerSuscriptores, insertarSuscriptor, seleccionarSuscriptorPorId, deleteSuscriptorPorId, deleteSuscriptorPorEmail, updateSuscriptorPorId, seleccionarSuscriptorPorEmail, activateSuscriptorPorId, insertarSuscriptorCategorias, eliminarSuscriptorCategorias } = require("../models/suscriptores.model.js");
 const { enviarEmailSuscriptor } = require("../utils/email.js");
 
 const getSuscriptores = async (req, res) => {
@@ -21,18 +22,27 @@ const getSuscriptorPorEmail = async (req, res) => {
 const registrarSuscriptor = async (req, res) => {
     try {
         const { email, categorias } = req.body;
-        console.log("_________________Email, categorias: ", email, categorias);
-
         const respuesta = await insertarSuscriptor(email);
         const nuevoInsertado = await seleccionarSuscriptorPorId(respuesta.insertId);
 
         const insertCat = await insertarSuscriptorCategorias(respuesta.insertId, categorias);
 
+        const categoriasNom = await getVariasCategorias(categorias);
+        console.log("________________::", categoriasNom);
+        let textoCategorias = "";
+        for (categoria of categoriasNom) {
+            textoCategorias += `<a href=http://localhost:3000/noticias/${categoria.slug}>${categoria.nombre}</a>, `;
+
+        }
+        textoCategorias = textoCategorias.slice(0, -2);
+
         const datosEmail = {
             para: nuevoInsertado.email,
             asunto: `ALTA como suscriptor con email ${nuevoInsertado.email} en el periodico upgrade.`,
-            texto: `Hola, has recivido este correo porque te has dado de ALTA como suscriptor con email <strong> ${nuevoInsertado.email} </strong> en el periodico upgrade. Para poder disfrutar de tu suscripción haz click en el siguiente enlace <a href="http://localhost:3000/api/suscriptores/activar/${nuevoInsertado.id}/1">ACTIVAR SUSCRIPCION</a>`,
-            textohtml: `Hola, has recivido este correo porque te has dado de ALTA como suscriptor con email <strong> ${nuevoInsertado.email} </strong> en el periodico upgrade. Para poder disfrutar de tu suscripción haz click en el siguiente enlace <a href="http://localhost:3000/api/suscriptores/activar/${nuevoInsertado.id}/1">ACTIVAR SUSCRIPCION</a>`,
+            texto: `Hola, has recivido este correo porque te has dado de ALTA como suscriptor con email <strong> ${nuevoInsertado.email} </strong> en el periodico upgrade. Para confirmar la suscripción haz click en el siguiente enlace <a href="http://localhost:3000/api/suscriptores/activar/${nuevoInsertado.id}/1">ACTIVAR SUSCRIPCION</a>`,
+            textohtml: `<p>Hola, has recivido este correo porque te has dado de ALTA como suscriptor con email <strong> ${nuevoInsertado.email} </strong> en el periodico upgrade.</p>
+            <p>Categorias en las que te has dado de alta: ${textoCategorias}.</p>
+            <p>Para confirmar la suscripción haz click en el siguiente enlace <a href="http://localhost:3000/api/suscriptores/activar/${nuevoInsertado.id}/1">ACTIVAR SUSCRIPCION</a></p>`,
         };
         enviarEmailSuscriptor(datosEmail);
 
@@ -57,33 +67,20 @@ const activarSuscriptor = async (req, res) => {
             return res.status(404).json({ mensaje: 'No se ha encontrado el Suscriptor para activar/desactivar' });
         }
 
-        const suscriptor = await seleccionarSuscriptorPorId(id);
-
-        // const datosEmail = {
-        //     para: suscriptor.email,
-        //     asunto: `ACTUALIZACIÓN como suscriptor con email ${suscriptor.email} en el periodico upgrade.`,
-        //     texto: `Hola, has recivido este correo porque te has ACTUALIZADO tus datos como suscriptor con email ${suscriptor.email} en el periodico upgrade.`,
-        //     textohtml: `<p>Hola, has recivido este correo porque te has dado de ACTUALIZADO tus datos como suscriptor con email <strong> ${suscriptor.email} </strong> en el periodico upgrade.</p>`
-        // };
-        // enviarEmailSuscriptor(datosEmail);
-
-        res.json({
-            mensaje: "Suscriptor activado/desactivado correctamente",
-            suscriptor
-        });
+        res.json({ mensaje: "Suscriptor activado/desactivado correctamente", });
 
     } catch (error) {
         console.log(error);
-        res.status(500).json({ mensaje: "Error al actualizar el suscriptor" });
+        res.status(500).json({ mensaje: "Error al activar el suscriptor" });
     }
 }
 
 const actualizarSuscriptor = async (req, res) => {
     try {
         const id = req.params.id;
-        const email = req.body.email;
+        const { email, categorias } = req.body;
         const suscriptorFound = await seleccionarSuscriptorPorEmail(email);
-        console.log("suscriptorfound: ", suscriptorFound);
+        console.log("_________________Email, categorias: ", email, categorias);
 
         if (suscriptorFound && suscriptorFound.id != id) {
             return res.status(404).json({ mensaje: `No se puede actualizar el usuario, el correo ${email} ya está en uso por otro usuario.` });
@@ -95,12 +92,13 @@ const actualizarSuscriptor = async (req, res) => {
         }
 
         const suscriptor = await seleccionarSuscriptorPorId(id);
-
+        const resultSC = await eliminarSuscriptorCategorias(id);
+        const insertCat = await insertarSuscriptorCategorias(id, categorias);
         const datosEmail = {
             para: suscriptor.email,
             asunto: `ACTUALIZACIÓN como suscriptor con email ${suscriptor.email} en el periodico upgrade.`,
-            texto: `Hola, has recivido este correo porque te has ACTUALIZADO tus datos como suscriptor con email ${suscriptor.email} en el periodico upgrade.`,
-            textohtml: `<p>Hola, has recivido este correo porque te has dado de ACTUALIZADO tus datos como suscriptor con email <strong> ${suscriptor.email} </strong> en el periodico upgrade.</p>`
+            texto: `Hola, has recivido este correo porque has ACTUALIZADO tus datos como suscriptor con email ${suscriptor.email} en el periodico upgrade.`,
+            textohtml: `<p>Hola, has recivido este correo porque has ACTUALIZADO tus datos como suscriptor con email <strong> ${suscriptor.email} </strong> en el periodico upgrade.</p>`
         };
         enviarEmailSuscriptor(datosEmail);
 
@@ -118,7 +116,8 @@ const actualizarSuscriptor = async (req, res) => {
 const eliminarSuscriptorPorId = async (req, res) => {
     try {
         const { id } = req.params;
-        const result = await deleteSuscriptorPorId(id);
+        const resultSC = await eliminarSuscriptorCategorias(id);
+        const resultS = await deleteSuscriptorPorId(id);
         res.json({ mensaje: "Suscriptor eliminado correctamente" });
     } catch (error) {
         console.log(error);
@@ -129,6 +128,8 @@ const eliminarSuscriptorPorId = async (req, res) => {
 const eliminarSuscriptorPorEmail = async (req, res) => {
     try {
         const { email } = req.params;
+        const suscriptor = await seleccionarSuscriptorPorEmail(email);
+        const resultSC = await eliminarSuscriptorCategorias(suscriptor.id);
         const result = await deleteSuscriptorPorEmail(email);
 
         const datosEmail = {
