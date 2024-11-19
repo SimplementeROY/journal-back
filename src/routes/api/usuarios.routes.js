@@ -3,16 +3,16 @@
 const express = require('express');
 const enrutador = express.Router();
 const { getUsuarios, registrarUsuario, actualizarUsuario, eliminarUsuario, getUsuarioPorId, loginUsuario } = require("../../controllers/usuarios.controller.js");
-const { validarExisteEmailUsuario } = require('../../utils/middelwares.js');
+const { validarExisteEmailUsuario, validarToken } = require('../../utils/middelwares.js');
 
-enrutador.get("/", getUsuarios);
-enrutador.get("/:id", getUsuarioPorId);
+enrutador.get("/", validarToken, getUsuarios);
+enrutador.get("/:id", validarToken, getUsuarioPorId);
 
-enrutador.post("/", validarExisteEmailUsuario, registrarUsuario);
+enrutador.post("/", validarToken, validarExisteEmailUsuario, registrarUsuario);
 enrutador.post("/login", loginUsuario);
 
-enrutador.put("/:id", actualizarUsuario);
+enrutador.put("/:id", validarToken, actualizarUsuario);
 
-enrutador.delete("/:id", eliminarUsuario);
+enrutador.delete("/:id", validarToken, eliminarUsuario);
 
 module.exports = enrutador;
