@@ -86,6 +86,7 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `cms_periodico`.`suscriptores` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `email` VARCHAR(150) NOT NULL,
+  `activo` TINYINT NOT NULL DEFAULT 0, 
   PRIMARY KEY (`id`),
   UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE)
 ENGINE = InnoDB;

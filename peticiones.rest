@@ -46,7 +46,7 @@ Authorization: {{tokenRedactor}}
   "estado": "borrador",
   "importancia": 10,
   "cambios": null,
-  "slug": "turismo-montana-economia"
+  "slug": "turismo-montana-economia2"
 }
 
 ###
@@ -136,8 +136,8 @@ POST {{host}}/api/suscriptores
 Content-Type: application/json
 
 {
-  "email": "jaimepavonp@gmail.com",
-  "categorias":[1,2,3]
+  "email": "ejemplo4@yopmail.com",
+  "categorias":[1,2,3,4]
 }
 
 ### Activar suscriptor 

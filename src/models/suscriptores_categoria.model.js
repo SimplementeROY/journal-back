@@ -1,9 +1,9 @@
 const poolSQL = require("../config/db.js");
 
-
+// select suscriptores_id from suscriptores_categoria as sc join suscriptores as s on sc.suscriptores_id = s.id where sc.categoria_id = 2 and s.activo = 1
 const obtenerSuscriptoresAUnaCategoria = async (categoriaId) => {
     const [resultado] = await poolSQL.query(
-        'select suscriptores_id from suscriptores_categoria where categoria_id = ?',
+        'select suscriptores_id from suscriptores_categoria as sc join suscriptores as s on sc.suscriptores_id = s.id where sc.categoria_id = ? and activo = 1',
         [categoriaId]
     );
     return resultado;
