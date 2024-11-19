@@ -1,6 +1,10 @@
 const { getVariasCategorias } = require("../models/categorias.model.js");
-const { obtenerSuscriptores, insertarSuscriptor, seleccionarSuscriptorPorId, deleteSuscriptorPorId, deleteSuscriptorPorEmail, updateSuscriptorPorId, seleccionarSuscriptorPorEmail, activateSuscriptorPorId, insertarSuscriptorCategorias, eliminarSuscriptorCategorias } = require("../models/suscriptores.model.js");
+const { obtenerSuscriptores, insertarSuscriptor, seleccionarSuscriptorPorId, deleteSuscriptorPorId,
+    deleteSuscriptorPorEmail, updateSuscriptorPorId, seleccionarSuscriptorPorEmail,
+    activateSuscriptorPorId } = require("../models/suscriptores.model.js");
 const { enviarEmailSuscriptor } = require("../utils/email.js");
+const { insertarSuscriptorCategorias, eliminarSuscriptorCategorias } = require("../models/suscriptores_categoria.model.js");
+
 
 const getSuscriptores = async (req, res) => {
     const Suscriptores = await obtenerSuscriptores();
