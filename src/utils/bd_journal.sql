@@ -56,7 +56,7 @@ CREATE TABLE IF NOT EXISTS `cms_periodico`.`noticias` (
   `estado` ENUM("revision", "publicado", "borrador") NOT NULL DEFAULT 'borrador',
   `importancia` INT NOT NULL,
   `cambios` LONGTEXT NULL,
-  `slug` VARCHAR(100) NULL,
+  `slug` VARCHAR(100) NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_noticias_usuarios_idx` (`redactor_id` ASC) VISIBLE,
   INDEX `fk_noticias_usuarios1_idx` (`editor_id` ASC) VISIBLE,

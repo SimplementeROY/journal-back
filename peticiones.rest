@@ -12,13 +12,19 @@ GET {{host}}/api/categorias/5
 
 ### ----------------------Peticiones NOTICIAS------------
 ###
-GET {{host}}/api/noticias/5
+GET {{host}}/api/noticias/17
 
 ###
-GET {{host}}/api/noticias/usuarios/2
+GET {{host}}/api/noticias/usuarios/1
 
 ###
 GET {{host}}/api/noticias/?seccion=secundario&categoria=deportes
+
+###
+GET {{host}}/api/noticias/?seccion=principal
+
+###
+GET {{host}}/api/noticias/?slug=reforma-educativa-proceso
 
 ###
 POST {{host}}/api/noticias
@@ -41,7 +47,7 @@ Authorization: {{tokenRedactor}}
 }
 
 ###
-PUT {{host}}/api/noticias/18
+PUT {{host}}/api/noticias/14
 Content-Type: application/json
 Authorization: {{tokenRedactor}}
 
@@ -57,7 +63,7 @@ Authorization: {{tokenRedactor}}
   "estado": "borrador",
   "importancia": 10,
   "cambios": null,
-  "slug": "turismo-montana"
+  "slug": "turismo-montana-economia"
 }
 
 ###
