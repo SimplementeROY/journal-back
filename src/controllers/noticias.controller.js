@@ -62,6 +62,11 @@ const postNoticia = async (req, res, next) => {
             const nuevaNoticia = await modelNoticias.seleccionarNoticiaPorId(nuevoId);
             // Ajustamos la fecha a hora local
             const nuevaNoticiaAjustada = fechaAHoraLocal(nuevaNoticia);
+
+            // Envío de email, sacar a otra función
+            const categoriaId = nuevaNoticiaAjustada[0].categoria_id;
+            
+
             return res.status(201).json(nuevaNoticiaAjustada[0]);
         } else {
             res.status(400).json({ message: 'Error: el slug utilizado ya existe en la base de datos' });

@@ -134,7 +134,7 @@ POST {{host}}/api/suscriptores
 Content-Type: application/json
 
 {
-  "email": "jaimepavonp@gmail.com"
+  "email": "ejemplo@yopmail.com"
 }
 
 ### Activar suscriptor 
