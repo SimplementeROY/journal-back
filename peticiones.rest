@@ -1,7 +1,7 @@
 @host = http://localhost:3000
 @tokenAdmin=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTMsIm5vbWJyZSI6ImFkbWluIiwiZW1haWwiOiJhZG1pbkBnbWFpbC5jb20iLCJyb2wiOiJhZG1pbiIsImlhdCI6MTczMTg3MDk3OX0.rZhmXH_lNeJp8g9g41dVAtG_C3zLz42-QWYczLL8xcE
 @tokenEditor = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTAsIm5vbWJyZSI6IkphaW1lIiwiZW1haWwiOiJqYWltZUBnbWFpbC5jb20iLCJyb2wiOiJlZGl0b3IiLCJpYXQiOjE3MzE4NzA4MzZ9.ODDSaTvbZQCYkdJSCUliwir_KDjXAyro2yt08E67sHY
-@tokenRedactor = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTIsIm5vbWJyZSI6InJlZGFjdG9yIiwiZW1haWwiOiJyZWRhY3RvckBnbWFpbC5jb20iLCJyb2wiOiJyZWRhY3RvciIsImlhdCI6MTczMTg3MDk5NH0.LpYHlIF4AGcdwy7l8TpzkVhlCF-l5gv1exXsI1bmMKU
+@tokenRedactor = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibm9tYnJlIjoiSnVhbiBQw6lyZXoiLCJlbWFpbCI6Imp1YW4ucGVyZXpAZXhhbXBsZS5jb20iLCJyb2wiOiJyZWRhY3RvciIsImlhdCI6MTczMjAxMzk0Mn0.oERo5mdRYkIAT3lAOQ4EC7yDiBmASNcdR9KjW8ns4CY
 
 ### ----------------------Peticiones CATEGORIAS------------
 ### GET todas las categorias
@@ -39,15 +39,15 @@ Authorization: {{tokenRedactor}}
   "fecha_publicacion": "2024-10-29",
   "redactor_id": 1,
   "editor_id": 4,
-  "categoria_id": 5,
+  "categoria_id": 1,
   "estado": "borrador",
   "importancia": 10,
   "cambios": null,
-  "slug": "turismo-montana-economia-nueva1"
+  "slug": "turismo-montana-economia"
 }
 
 ###
-PUT {{host}}/api/noticias/14
+PUT {{host}}/api/noticias/21
 Content-Type: application/json
 Authorization: {{tokenRedactor}}
 
@@ -63,7 +63,7 @@ Authorization: {{tokenRedactor}}
   "estado": "borrador",
   "importancia": 10,
   "cambios": null,
-  "slug": "turismo-montana-economia"
+  "slug": "turismo-montana-laguna"
 }
 
 ###
@@ -85,7 +85,7 @@ POST {{host}}/api/usuarios/login
 Content-Type: application/json
 
 {
-  "email": "redactor@gmail.com",
+  "email": "juan.perez@example.com",
   "contraseña": "1234"
 }
 

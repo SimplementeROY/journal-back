@@ -2,7 +2,7 @@ const { json } = require("express");
 const modelNoticias = require("../models/noticias.model.js");
 const modelUsuarios = require("../models/usuarios.model.js");
 const modelCategorias = require("../models/categorias.model.js");
-const { fechaAHoraLocal } = require("../utils/helpers.js");
+const { fechaAHoraLocal, enviarEmailNuevaNoticia } = require("../utils/helpers.js");
 
 const getNoticiaPorId = async (req, res, next) => {
     try {
@@ -53,7 +53,7 @@ const postNoticia = async (req, res, next) => {
     try {
         // Comprobamos si ya existe el slug
         const existeSlug = await modelNoticias.seleccionarNoticiaPorSlug(req.body.slug);
-        if (!existeSlug) {
+        if (!existeSlug[0]) {
             const nuevoId = await modelNoticias.insertarNoticia(req.body);
             // Error si la inserción ha fallado
             if (nuevoId === -1) {
@@ -63,9 +63,8 @@ const postNoticia = async (req, res, next) => {
             // Ajustamos la fecha a hora local
             const nuevaNoticiaAjustada = fechaAHoraLocal(nuevaNoticia);
 
-            // Envío de email, sacar a otra función
-            const categoriaId = nuevaNoticiaAjustada[0].categoria_id;
-            
+            // Envío de email a los suscriptores de la categoría de la nueva noticia
+            enviarEmailNuevaNoticia(nuevaNoticiaAjustada[0]);
 
             return res.status(201).json(nuevaNoticiaAjustada[0]);
         } else {
@@ -81,7 +80,7 @@ const putNoticia = async (req, res, next) => {
         const { id } = req.params;
         // Comprobamos si ya existe el slug
         const existeSlug = await modelNoticias.seleccionarNoticiaPorSlug(req.body.slug);
-        if (!existeSlug || existeSlug[0].id == id) {
+        if (!existeSlug[0] || existeSlug[0].id == id) {
             const affectedRows = await modelNoticias.actualizarNoticia(id, req.body);
             // Error si la modificación ha fallado
             if (affectedRows !== 1) {

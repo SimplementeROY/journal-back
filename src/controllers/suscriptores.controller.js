@@ -39,8 +39,8 @@ const registrarSuscriptor = async (req, res) => {
         const datosEmail = {
             para: nuevoInsertado.email,
             asunto: `ALTA como suscriptor con email ${nuevoInsertado.email} en el periodico upgrade.`,
-            texto: `Hola, has recivido este correo porque te has dado de ALTA como suscriptor con email <strong> ${nuevoInsertado.email} </strong> en el periodico upgrade. Para confirmar la suscripción haz click en el siguiente enlace <a href="http://localhost:3000/api/suscriptores/activar/${nuevoInsertado.id}/1">ACTIVAR SUSCRIPCION</a>`,
-            textohtml: `<p>Hola, has recivido este correo porque te has dado de ALTA como suscriptor con email <strong> ${nuevoInsertado.email} </strong> en el periodico upgrade.</p>
+            texto: `Hola, has recibido este correo porque te has dado de ALTA como suscriptor con email <strong> ${nuevoInsertado.email} </strong> en el periodico upgrade. Para confirmar la suscripción haz click en el siguiente enlace <a href="http://localhost:3000/api/suscriptores/activar/${nuevoInsertado.id}/1">ACTIVAR SUSCRIPCION</a>`,
+            textohtml: `<p>Hola, has recibido este correo porque te has dado de ALTA como suscriptor con email <strong> ${nuevoInsertado.email} </strong> en el periodico upgrade.</p>
             <p>Categorias en las que te has dado de alta: ${textoCategorias}.</p>
             <p>Para confirmar la suscripción haz click en el siguiente enlace <a href="http://localhost:3000/api/suscriptores/activar/${nuevoInsertado.id}/1">ACTIVAR SUSCRIPCION</a></p>`,
         };
