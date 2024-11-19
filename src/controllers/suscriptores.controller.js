@@ -1,4 +1,4 @@
-const { obtenerSuscriptores, insertarSuscriptor, seleccionarSuscriptorPorId, deleteSuscriptorPorId, deleteSuscriptorPorEmail, updateSuscriptorPorId, seleccionarSuscriptorPorEmail, activateSuscriptorPorId } = require("../models/suscriptores.model.js");
+const { obtenerSuscriptores, insertarSuscriptor, seleccionarSuscriptorPorId, deleteSuscriptorPorId, deleteSuscriptorPorEmail, updateSuscriptorPorId, seleccionarSuscriptorPorEmail, activateSuscriptorPorId, insertarSuscriptorCategorias } = require("../models/suscriptores.model.js");
 const { enviarEmailSuscriptor } = require("../utils/email.js");
 
 const getSuscriptores = async (req, res) => {
@@ -20,9 +20,13 @@ const getSuscriptorPorEmail = async (req, res) => {
 
 const registrarSuscriptor = async (req, res) => {
     try {
-        const { email } = req.body;
+        const { email, categorias } = req.body;
+        console.log("_________________Email, categorias: ", email, categorias);
+
         const respuesta = await insertarSuscriptor(email);
         const nuevoInsertado = await seleccionarSuscriptorPorId(respuesta.insertId);
+
+        const insertCat = await insertarSuscriptorCategorias(respuesta.insertId, categorias);
 
         const datosEmail = {
             para: nuevoInsertado.email,

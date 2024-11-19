@@ -1,7 +1,7 @@
 @host = http://localhost:3000
-@tokenAdmin = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Niwibm9tYnJlIjoiU2lsdmlhIMOBbHZhcmV6IiwiZW1haWwiOiJzaWx2aWEuYWx2YXJlekBleGFtcGxlLmNvbSIsInJvbCI6ImFkbWluIiwiaWF0IjoxNzMxOTI5MzY4fQ.PAWtLZn1wGjBJewTEA7ijTawindj5ZU7Ndo-a--Vpjg
-@tokenEditor = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Miwibm9tYnJlIjoiQW5hIEzDs3BleiIsImVtYWlsIjoiYW5hLmxvcGV6QGV4YW1wbGUuY29tIiwicm9sIjoiZWRpdG9yIiwiaWF0IjoxNzMxOTI5NDM2fQ.48--VlZazKpwaE74ZCqTIbAD3wl1udgG8uA2NQ1B4Zg
-@tokenRedactor = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibm9tYnJlIjoiSnVhbiBQw6lyZXoiLCJlbWFpbCI6Imp1YW4ucGVyZXpAZXhhbXBsZS5jb20iLCJyb2wiOiJyZWRhY3RvciIsImlhdCI6MTczMTkyOTQ4Mn0.ZsHq650SRB65dOLMx865erV_9krlUDw270bwVq7ksmA
+@tokenAdmin=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTMsIm5vbWJyZSI6ImFkbWluIiwiZW1haWwiOiJhZG1pbkBnbWFpbC5jb20iLCJyb2wiOiJhZG1pbiIsImlhdCI6MTczMTg3MDk3OX0.rZhmXH_lNeJp8g9g41dVAtG_C3zLz42-QWYczLL8xcE
+@tokenEditor = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTAsIm5vbWJyZSI6IkphaW1lIiwiZW1haWwiOiJqYWltZUBnbWFpbC5jb20iLCJyb2wiOiJlZGl0b3IiLCJpYXQiOjE3MzE4NzA4MzZ9.ODDSaTvbZQCYkdJSCUliwir_KDjXAyro2yt08E67sHY
+@tokenRedactor = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTIsIm5vbWJyZSI6InJlZGFjdG9yIiwiZW1haWwiOiJyZWRhY3RvckBnbWFpbC5jb20iLCJyb2wiOiJyZWRhY3RvciIsImlhdCI6MTczMTg3MDk5NH0.LpYHlIF4AGcdwy7l8TpzkVhlCF-l5gv1exXsI1bmMKU
 
 ### ----------------------Peticiones CATEGORIAS------------
 ### GET todas las categorias
@@ -18,7 +18,7 @@ GET {{host}}/api/noticias/5
 GET {{host}}/api/noticias/usuarios/2
 
 ###
-GET {{host}}/api/noticias/?seccion=secundario
+GET {{host}}/api/noticias/?seccion=secundario&categoria=deportes
 
 ###
 POST {{host}}/api/noticias
@@ -37,11 +37,11 @@ Authorization: {{tokenRedactor}}
   "estado": "borrador",
   "importancia": 10,
   "cambios": null,
-  "slug": "turismo-montana-economia"
+  "slug": "turismo-montana-economia-nueva1"
 }
 
 ###
-PUT {{host}}/api/noticias/16
+PUT {{host}}/api/noticias/18
 Content-Type: application/json
 Authorization: {{tokenRedactor}}
 
@@ -61,9 +61,8 @@ Authorization: {{tokenRedactor}}
 }
 
 ###
-DELETE {{host}}/api/noticias/16
+DELETE {{host}}/api/noticias/18
 Authorization: {{tokenRedactor}}
-
 
 ### ----------------------Peticiones USUARIOS------------  
 
@@ -80,7 +79,7 @@ POST {{host}}/api/usuarios/login
 Content-Type: application/json
 
 {
-  "email": "juan.perez@example.com",
+  "email": "redactor@gmail.com",
   "contraseña": "1234"
 }
 
@@ -90,8 +89,8 @@ Content-Type: application/json
 Authorization: {{tokenRedactor}}
 
 {
-  "nombre": "Silvia Álvarez",
-  "email": "silvia.alvarez@example.com",
+  "nombre": "admin",
+  "email": "admin@gmail.com",
   "contraseña": "1234",
   "rol": "admin"
 }
@@ -128,7 +127,8 @@ POST {{host}}/api/suscriptores
 Content-Type: application/json
 
 {
-  "email": "jaimepavonp@gmail.com"
+  "email": "jaimepavonp@gmail.com",
+  "categorias":[1,2,3]
 }
 
 ### Activar suscriptor 
@@ -142,7 +142,7 @@ Content-Type: application/json
   "email": "jaimePavonp@gmail.com"
 }
 
-### Eliminar un suscriptor POR ID
+### Eliminar un suscriptor POR ID  ---> OJO NO USAR ESTA
 DELETE {{host}}/api/suscriptores/31
 
 ### Eliminar un suscriptor POR EMAIL
