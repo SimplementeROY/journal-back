@@ -49,6 +49,7 @@ const enviarEmailNuevaNoticia = async (noticia) => {
                         <a href="http://localhost:4200/noticias/${categoria.slug}/${noticia.slug}" style="text-decoration: none; color: darkblue; padding: 10px; font-family: Arial; font-size: 18px; font-style: italic">${noticia.titular}</a>
                     </div>
                     <img src="${noticia.imagen}" alt="${noticia.titular}" style="padding: 10px; padding-bottom: 30px; max-width: 80vw;">
+                    <p style="padding: 10px; font-family: Arial; font-size: 12px;">Has recibido este email porque te has dado de alta en la categoría ${categoria.nombre} de Upgrade Journal con el email ${datosSuscriptor.email}</p>
                 </div>`,
         };
         enviarEmailSuscriptor(datosEmail);

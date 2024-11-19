@@ -43,10 +43,17 @@ const registrarSuscriptor = async (req, res) => {
         const datosEmail = {
             para: nuevoInsertado.email,
             asunto: `ALTA como suscriptor con email ${nuevoInsertado.email} en el periodico upgrade.`,
-            texto: `Hola, has recibido este correo porque te has dado de ALTA como suscriptor con email <strong> ${nuevoInsertado.email} </strong> en el periodico upgrade. Para confirmar la suscripción haz click en el siguiente enlace <a href="http://localhost:3000/api/suscriptores/activar/${nuevoInsertado.id}/1">ACTIVAR SUSCRIPCION</a>`,
-            textohtml: `<p>Hola, has recibido este correo porque te has dado de ALTA como suscriptor con email <strong> ${nuevoInsertado.email} </strong> en el periodico upgrade.</p>
-            <p>Categorias en las que te has dado de alta: ${textoCategorias}.</p>
-            <p>Para confirmar la suscripción haz click en el siguiente enlace <a href="http://localhost:3000/api/suscriptores/activar/${nuevoInsertado.id}/1">ACTIVAR SUSCRIPCION</a></p>`,
+            texto: `Has recibido este correo porque te has dado de ALTA como suscriptor con email <strong>${nuevoInsertado.email}</strong> en Upgrade Journal. Para confirmar la suscripción, haz click en el siguiente enlace: <a href="http://localhost:3000/api/suscriptores/activar/${nuevoInsertado.id}/1">ACTIVAR SUSCRIPCION</a>`,
+            textohtml: `
+            <div style="background-color: lavender; padding: 5px; margin: 5px; border: 1px solid black; border-radius: 10px;">
+                <h2 style="padding: 10px; font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: darkblue">Upgrade Journal</h2>
+                <p style="padding: 10px; font-family: Arial; font-size: 18px;">Has recibido este correo porque te has dado de ALTA como suscriptor con email <strong>${nuevoInsertado.email}</strong> en Upgrade Journal.</p>
+                <p style="padding: 10px; font-family: Arial; font-size: 18px;">Categorias dadas de alta en la suscripción: ${textoCategorias}.</p>
+                <p style="padding: 10px; font-family: Arial; font-size: 18px;">Para confirmar la suscripción, haz click en el siguiente enlace:
+                <div style="display: flex; justify-content: center; align-items: center; font-weight: 400; color: #fff; background-color: darkblue; border: 1px solid darkblue; max-width: 15.625rem; padding: 0.375rem 0.75rem; margin: 0 auto 1.25rem auto; font-size: 1rem; line-height: 1.5; border-radius: 0.25rem; transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;">
+                    <a href="http://localhost:3000/api/suscriptores/activar/${nuevoInsertado.id}/1" style="text-decoration: none; color: white; padding: 10px; font-family: Arial; font-size: 18px; font-style: italic;">ACTIVAR SUSCRIPCION</a></p>
+                </div>
+            </div>`,
         };
         enviarEmailSuscriptor(datosEmail);
 
