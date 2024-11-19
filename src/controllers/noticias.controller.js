@@ -49,6 +49,18 @@ const getNoticiasPorQueryParams = async (req, res, next) => {
     }
 }
 
+const getUltimasNoticias = async (req, res, next) => {
+    try {
+        const num = Number(req.query.num);
+        // Si num es NaN, el valor es 10 por defecto
+        const numeroNoticias = isNaN(num) ? 10 : Math.abs(num);
+        const resultado = await modelNoticias.seleccionarUltimasNoticias(numeroNoticias);
+        return procesarResultadoArray(resultado, res, 'No se han encontrado noticias en la base de datos');
+    } catch (error) {
+        next(error);
+    }
+}
+
 const postNoticia = async (req, res, next) => {
     try {
         // Comprobamos si ya existe el slug
@@ -135,5 +147,11 @@ const procesarResultadoUnico = (resultado, res, mensajeError) => {
 };
 
 module.exports = {
-    getNoticiaPorId, getNoticiasDeUsuario, getNoticiasPorQueryParams, postNoticia, putNoticia, deleteNoticia
+    getNoticiaPorId,
+    getNoticiasDeUsuario,
+    getNoticiasPorQueryParams,
+    getUltimasNoticias,
+    postNoticia,
+    putNoticia,
+    deleteNoticia
 };

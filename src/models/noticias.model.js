@@ -40,6 +40,14 @@ const seleccionarNoticiaPorSlug = async (slug) => {
     return resultado;
 }
 
+const seleccionarUltimasNoticias = async (numeroNoticias) => {
+    const [resultado] = await poolSQL.query(
+        'select * from noticias order by fecha_publicacion desc limit ?',
+        [numeroNoticias]
+    );
+    return resultado;
+}
+
 const insertarNoticia = async ({ titular, imagen, texto, secciones, fecha_publicacion, redactor_id, editor_id, categoria_id, estado, importancia, cambios, slug }) => {
     const [resultado] = await poolSQL.query(
         'insert into noticias (titular, imagen, texto, secciones, fecha_publicacion, redactor_id, editor_id, categoria_id, estado, importancia, cambios, slug) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
@@ -73,6 +81,7 @@ module.exports = {
     seleccionarNoticiasPorSeccionCategoria,
     seleccionarNoticiasPorSeccion,
     seleccionarNoticiaPorSlug,
+    seleccionarUltimasNoticias,
     insertarNoticia,
     actualizarNoticia,
     borrarNoticia
