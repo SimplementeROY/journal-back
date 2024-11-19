@@ -27,22 +27,6 @@ const insertarSuscriptor = async (email) => {
     return resultado;
 }
 
-const insertarSuscriptorCategorias = async (idSuscriptor, categorias) => {
-    let bucleCategorias = "";
-    for (categoria of categorias) {
-        bucleCategorias += `(${idSuscriptor},${categoria}),`;
-    }
-    bucleCategorias = bucleCategorias.slice(0, -1);//eliminar la coma ultima sobrante
-    const [resultado] = await poolSQL.query(`INSERT INTO suscriptores_categoria (suscriptores_id, categoria_id) VALUES ${bucleCategorias}`);
-    //console.log("RESULTADO: ", resultado);
-    return resultado;
-}
-
-const eliminarSuscriptorCategorias = (idSuscriptor) => {
-    const result = poolSQL.query('DELETE FROM suscriptores_categoria WHERE suscriptores_id =?', [idSuscriptor]);
-    return result;
-}
-
 const updateSuscriptorPorId = (id, email) => {
     const result = poolSQL.query('UPDATE suscriptores SET email=? WHERE id=?', [email, id]);
     return result;
@@ -72,6 +56,4 @@ module.exports = {
     deleteSuscriptorPorEmail,
     updateSuscriptorPorId,
     activateSuscriptorPorId,
-    insertarSuscriptorCategorias,
-    eliminarSuscriptorCategorias
 };
