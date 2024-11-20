@@ -1,6 +1,6 @@
 @host = http://localhost:3000
-@tokenAdmin=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTMsIm5vbWJyZSI6ImFkbWluIiwiZW1haWwiOiJhZG1pbkBnbWFpbC5jb20iLCJyb2wiOiJhZG1pbiIsImlhdCI6MTczMTg3MDk3OX0.rZhmXH_lNeJp8g9g41dVAtG_C3zLz42-QWYczLL8xcE
-@tokenEditor = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTAsIm5vbWJyZSI6IkphaW1lIiwiZW1haWwiOiJqYWltZUBnbWFpbC5jb20iLCJyb2wiOiJlZGl0b3IiLCJpYXQiOjE3MzE4NzA4MzZ9.ODDSaTvbZQCYkdJSCUliwir_KDjXAyro2yt08E67sHY
+@tokenAdmin = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Niwibm9tYnJlIjoiU2lsdmlhIMOBbHZhcmV6IiwiZW1haWwiOiJzaWx2aWEuYWx2YXJlekBleGFtcGxlLmNvbSIsInJvbCI6ImFkbWluIiwiaWF0IjoxNzMyMTEzNDc2fQ.xT9KectEsbYvA7LVjjK1d7KBiAGWrPx6jGObm53mpGA
+@tokenEditor = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Miwibm9tYnJlIjoiQW5hIEzDs3BleiIsImVtYWlsIjoiYW5hLmxvcGV6QGV4YW1wbGUuY29tIiwicm9sIjoiZWRpdG9yIiwiaWF0IjoxNzMyMTEzMjgwfQ.mx7HIHGzqDokvr3tVnfVDVBN0s3-uEf7pg03AxJ0tmk
 @tokenRedactor = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibm9tYnJlIjoiSnVhbiBQw6lyZXoiLCJlbWFpbCI6Imp1YW4ucGVyZXpAZXhhbXBsZS5jb20iLCJyb2wiOiJyZWRhY3RvciIsImlhdCI6MTczMjAxMzk0Mn0.oERo5mdRYkIAT3lAOQ4EC7yDiBmASNcdR9KjW8ns4CY
 
 ### ----------------------Peticiones CATEGORIAS------------
@@ -15,7 +15,8 @@ GET {{host}}/api/categorias/5
 GET {{host}}/api/noticias/17
 
 ###
-GET {{host}}/api/noticias/usuarios/1
+GET {{host}}/api/noticias/usuario
+Authorization: {{tokenRedactor}}
 
 ###
 GET {{host}}/api/noticias/?seccion=secundario&categoria=deportes
@@ -88,7 +89,7 @@ POST {{host}}/api/usuarios/login
 Content-Type: application/json
 
 {
-  "email": "juan.perez@example.com",
+  "email": "silvia.alvarez@example.com",
   "contraseña": "1234"
 }
 

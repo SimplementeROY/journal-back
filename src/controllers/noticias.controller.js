@@ -16,12 +16,9 @@ const getNoticiaPorId = async (req, res, next) => {
 
 const getNoticiasDeUsuario = async (req, res, next) => {
     try {
-        const { idUsuario } = req.params;
-        const usuario = await modelUsuarios.seleccionarUsuarioPorId(idUsuario);
-        if (!usuario) {
-            return res.status(404).json({ message: 'El usuario no existe en la base de datos' });
-        }
-        const resultado = await modelNoticias.seleccionarNoticiasPorUsuario(idUsuario);
+        // Obtenemos el usuario de la petición, que fue incrustado al validar el token
+        const { usuarioIncrustado } = req;
+        const resultado = await modelNoticias.seleccionarNoticiasPorUsuario(usuarioIncrustado.id);
         return procesarResultadoArray(resultado, res, 'No se han encontrado noticias en la base de datos');
     } catch (error) {
         next(error);

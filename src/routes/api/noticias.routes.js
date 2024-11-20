@@ -6,7 +6,7 @@ const enrutador = express.Router();
 
 enrutador.get('/', getNoticiasPorQueryParams);
 enrutador.get('/ultimas', getUltimasNoticias);
-enrutador.get('/usuarios/:idUsuario', getNoticiasDeUsuario);
+enrutador.get('/usuario', validarToken, getNoticiasDeUsuario);
 enrutador.get('/:id', getNoticiaPorId);
 
 enrutador.post('/', validarToken, postNoticia);
