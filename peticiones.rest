@@ -45,7 +45,7 @@ Authorization: {{tokenRedactor}}
   "editor_id": 4,
   "categoria_id": 1,
   "estado": "borrador",
-  "importancia": 10,
+  "importancia": "media",
   "cambios": null,
   "slug": "turismo-montana-economia"
 }
@@ -65,7 +65,7 @@ Authorization: {{tokenRedactor}}
   "editor_id": 4,
   "categoria_id": 5,
   "estado": "borrador",
-  "importancia": 10,
+  "importancia": "baja",
   "cambios": null,
   "slug": "turismo-montana-laguna"
 }
