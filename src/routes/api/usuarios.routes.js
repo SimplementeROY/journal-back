@@ -2,9 +2,10 @@
 
 const express = require('express');
 const enrutador = express.Router();
-const { getUsuarios, registrarUsuario, actualizarUsuario, eliminarUsuario, getUsuarioPorId, loginUsuario } = require("../../controllers/usuarios.controller.js");
+const { getUsuarios, registrarUsuario, actualizarUsuario, eliminarUsuario, getUsuarioPorId, loginUsuario, getUsuariosEditores } = require("../../controllers/usuarios.controller.js");
 const { validarExisteEmailUsuario, validarToken } = require('../../utils/middelwares.js');
 
+enrutador.get("/editores", validarToken, getUsuariosEditores);
 enrutador.get("/", validarToken, getUsuarios);
 enrutador.get("/:id", validarToken, getUsuarioPorId);
 

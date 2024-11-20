@@ -84,6 +84,10 @@ Authorization: {{tokenRedactor}}
 GET {{host}}/api/usuarios/5
 Authorization: {{tokenRedactor}}
 
+### Obtener usuarios editores
+GET {{host}}/api/usuarios/editores
+Authorization: {{tokenRedactor}}
+
 ### Login de usuario
 POST {{host}}/api/usuarios/login
 Content-Type: application/json

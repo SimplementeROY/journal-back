@@ -24,6 +24,11 @@ const seleccionarUsuarioPorEmail = async (email) => {
     return resultado[0];
 }
 
+const seleccionarUsuariosEditores = async () => {
+    const resultado = await poolSQL.query('select id, nombre from usuarios where rol = "editor"');
+    return resultado[0];
+}
+
 // insert into usuarios (nombre, email, contraseña, rol) values (?, ?, ?, ?)
 const insertarUsuario = async ({ nombre, email, contraseña, rol }) => {
     const [resultado] = await poolSQL.query(
@@ -50,6 +55,7 @@ module.exports = {
     seleccionarUsuarioPorId,
     seleccionarUsuarioPorEmail,
     obtenerUsuarios,
+    seleccionarUsuariosEditores,
     insertarUsuario,
     deleteUsuarioPorId,
     updateUsuarioPorId

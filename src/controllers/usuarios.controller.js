@@ -1,6 +1,6 @@
 const { json } = require("express");
 const bcrypt = require('bcrypt');
-const { obtenerUsuarios, insertarUsuario, seleccionarUsuarioPorId, deleteUsuarioPorId, updateUsuarioPorId, seleccionarUsuarioPorEmail } = require("../models/usuarios.model.js");
+const { obtenerUsuarios, insertarUsuario, seleccionarUsuarioPorId, deleteUsuarioPorId, updateUsuarioPorId, seleccionarUsuarioPorEmail, seleccionarUsuariosEditores } = require("../models/usuarios.model.js");
 const { crearToken } = require("../utils/helpers.js");
 
 // Obtener todos los usuarios
@@ -14,6 +14,16 @@ const getUsuarioPorId = async (req, res) => {
     const { id } = req.params;
     const usuario = await seleccionarUsuarioPorId(id);
     res.json(usuario);
+}
+
+// Obtener los usuarios con rol editor
+const getUsuariosEditores = async (req, res, next) => {
+    try {
+        const editores = await seleccionarUsuariosEditores();
+        res.json(editores);
+    } catch (error) {
+        next(error);
+    }
 }
 
 // Registrar un usuario
@@ -103,5 +113,6 @@ module.exports = {
     loginUsuario,
     actualizarUsuario,
     eliminarUsuario,
-    getUsuarioPorId
+    getUsuarioPorId,
+    getUsuariosEditores
 }
