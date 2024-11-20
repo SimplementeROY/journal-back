@@ -18,7 +18,7 @@ const seleccionarNoticiasPorUsuario = async (id) => {
 
 const seleccionarNoticiasPorSeccionCategoria = async (seccion, categoriaId) => {
     const [resultado] = await poolSQL.query(
-        'select * from noticias where secciones = ? and categoria_id = ? order by fecha_publicacion desc',
+        'select * from noticias where secciones = ? and categoria_id = ? and estado = "publicado" order by fecha_publicacion desc',
         [seccion, categoriaId]
     );
     return resultado;
@@ -26,7 +26,7 @@ const seleccionarNoticiasPorSeccionCategoria = async (seccion, categoriaId) => {
 
 const seleccionarNoticiasPorSeccion = async (seccion) => {
     const [resultado] = await poolSQL.query(
-        'select * from noticias where secciones = ? order by fecha_publicacion desc',
+        'select * from noticias where secciones = ? and estado = "publicado" order by fecha_publicacion desc',
         [seccion]
     );
     return resultado;
@@ -34,7 +34,7 @@ const seleccionarNoticiasPorSeccion = async (seccion) => {
 
 const seleccionarNoticiaPorSlug = async (slug) => {
     const [resultado] = await poolSQL.query(
-        'select * from noticias where slug = ? order by fecha_publicacion desc',
+        'select * from noticias where slug = ? and estado = "publicado" order by fecha_publicacion desc',
         [slug]
     );
     return resultado;
