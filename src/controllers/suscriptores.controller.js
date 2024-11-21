@@ -1,9 +1,13 @@
+const tokenator = require("jsonwebtoken");
+
+
 const { getVariasCategorias } = require("../models/categorias.model.js");
 const { obtenerSuscriptores, insertarSuscriptor, seleccionarSuscriptorPorId, deleteSuscriptorPorId,
     deleteSuscriptorPorEmail, updateSuscriptorPorId, seleccionarSuscriptorPorEmail,
     activateSuscriptorPorId } = require("../models/suscriptores.model.js");
 const { enviarEmailSuscriptor } = require("../utils/email.js");
 const { insertarSuscriptorCategorias, eliminarSuscriptorCategorias } = require("../models/suscriptores_categoria.model.js");
+const { crearToken } = require("../utils/helpers.js");
 
 
 const getSuscriptores = async (req, res) => {
@@ -27,19 +31,26 @@ const registrarSuscriptor = async (req, res) => {
     try {
         const { email, categorias } = req.body;
         const respuesta = await insertarSuscriptor(email);
-        const nuevoInsertado = await seleccionarSuscriptorPorId(respuesta.insertId);
 
+        //_______________________________insertamos suscriptor Y DESPUES insertamos las lineas de tabla suscriptor_categorias (tantas como categorias se ha suscrito)
+        const nuevoInsertado = await seleccionarSuscriptorPorId(respuesta.insertId);
         const insertCat = await insertarSuscriptorCategorias(respuesta.insertId, categorias);
 
+        //_______________________________Llamar a categorias para generar string de categorias suscritas con sus correspondientes URLs
         const categoriasNom = await getVariasCategorias(categorias);
-        console.log("________________::", categoriasNom);
         let textoCategorias = "";
         for (categoria of categoriasNom) {
-            textoCategorias += `<a href=http://localhost:3000/noticias/${categoria.slug}>${categoria.nombre}</a>, `;
+            textoCategorias += `<a href=http://localhost:4200/noticias/${categoria.slug}>${categoria.nombre}</a>, `;
 
         }
         textoCategorias = textoCategorias.slice(0, -2);
 
+        //_______________________________Crear token para asegurar la activación de la suscripcion cuando click en el enlace ACTIVAR en el mail 
+        nuevoInsertado.nombre = "suscriptor"; //estas dos lineas se han creado para REUTILIZAR la funcion crearToken ya que pide un objeto con id, email, nombre y rol
+        nuevoInsertado.rol = "suscriptor";
+        const tokenSuscriptor = crearToken(nuevoInsertado);
+
+        //_______________________________Crear email de alta y enviarlo
         const datosEmail = {
             para: nuevoInsertado.email,
             asunto: `ALTA como suscriptor con email ${nuevoInsertado.email} en el periodico upgrade.`,
@@ -51,10 +62,10 @@ const registrarSuscriptor = async (req, res) => {
                 <p style="padding: 10px; font-family: Arial; font-size: 18px;">Categorias dadas de alta en la suscripción: ${textoCategorias}.</p>
                 <p style="padding: 10px; font-family: Arial; font-size: 18px;">Para confirmar la suscripción, haz click en el siguiente enlace:
                 <div style="display: flex; justify-content: center; align-items: center; font-weight: 400; color: #fff; background-color: darkblue; border: 1px solid darkblue; max-width: 15.625rem; padding: 0.375rem 0.75rem; margin: 0 auto 1.25rem auto; font-size: 1rem; line-height: 1.5; border-radius: 0.25rem; transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;">
-                    <a href="http://localhost:3000/api/suscriptores/activar/${nuevoInsertado.id}/1" style="text-decoration: none; color: white; padding: 10px; font-family: Arial; font-size: 18px; font-style: italic;">ACTIVAR SUSCRIPCION</a></p>
+                    <a href="http://localhost:4200/activar/${nuevoInsertado.id}/1/${tokenSuscriptor}" style="text-decoration: none; color: white; padding: 10px; font-family: Arial; font-size: 18px; font-style: italic;">ACTIVAR SUSCRIPCION</a></p>
                 </div>
             </div>`,
-        };
+        };// ----->> OJO ---->> la linea 64 contiene /1/elTokenCreadoDesdeElBack DONDE el 1 es el valor que se le pasará al campo "activo" de la tabla suscriptores, de modo que si se le pasara un 0 lo que se haría es inactivar
         enviarEmailSuscriptor(datosEmail);
 
         res.status(201).json({
@@ -69,8 +80,10 @@ const registrarSuscriptor = async (req, res) => {
 }
 
 const activarSuscriptor = async (req, res) => {
+    //const token = req.params.token;
     const id = req.params.id;
     const activo = req.params.activo;
+
     try {
         const result = await activateSuscriptorPorId(activo, id);
 
@@ -78,11 +91,11 @@ const activarSuscriptor = async (req, res) => {
             return res.status(404).json({ mensaje: 'No se ha encontrado el Suscriptor para activar/desactivar' });
         }
 
-        res.json({ mensaje: "Suscriptor activado/desactivado correctamente", });
+        res.json({ mensaje: "Suscriptor activado/desactivado correctamente", activo: true });
 
     } catch (error) {
         console.log(error);
-        res.status(500).json({ mensaje: "Error al activar el suscriptor" });
+        res.status(500).json({ mensaje: "Error al activar el suscriptor", activo: false });
     }
 }
 
