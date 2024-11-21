@@ -42,7 +42,7 @@ const seleccionarNoticiaPorSlug = async (slug) => {
 
 const seleccionarUltimasNoticias = async (numeroNoticias) => {
     const [resultado] = await poolSQL.query(
-        'select * from noticias order by fecha_publicacion desc limit ?',
+        'select n.*, c.slug as slug_cat from noticias n join categoria c on n.categoria_id = c.id where n.estado = "publicado" order by n.fecha_publicacion desc limit ?',
         [numeroNoticias]
     );
     return resultado;
@@ -51,7 +51,7 @@ const seleccionarUltimasNoticias = async (numeroNoticias) => {
 const seleccionarNoticiasPorBusqueda = async (condiciones, palabras) => {
     const valores = palabras.flatMap(palabra => [palabra, palabra]);
     const [resultado] = await poolSQL.query(
-        `select * from noticias where ${condiciones} order by fecha_publicacion desc`,
+        `select n.*, c.slug as slug_cat from noticias n join categoria c on n.categoria_id = c.id where estado = "publicado" and ${condiciones} order by fecha_publicacion desc`,
         valores
     );
     return resultado;
