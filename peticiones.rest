@@ -2,7 +2,7 @@
 @tokenAdmin = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Niwibm9tYnJlIjoiU2lsdmlhIMOBbHZhcmV6IiwiZW1haWwiOiJzaWx2aWEuYWx2YXJlekBleGFtcGxlLmNvbSIsInJvbCI6ImFkbWluIiwiaWF0IjoxNzMyMTEzNDc2fQ.xT9KectEsbYvA7LVjjK1d7KBiAGWrPx6jGObm53mpGA
 @tokenEditor = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Miwibm9tYnJlIjoiQW5hIEzDs3BleiIsImVtYWlsIjoiYW5hLmxvcGV6QGV4YW1wbGUuY29tIiwicm9sIjoiZWRpdG9yIiwiaWF0IjoxNzMyMTEzMjgwfQ.mx7HIHGzqDokvr3tVnfVDVBN0s3-uEf7pg03AxJ0tmk
 @tokenRedactor = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibm9tYnJlIjoiSnVhbiBQw6lyZXoiLCJlbWFpbCI6Imp1YW4ucGVyZXpAZXhhbXBsZS5jb20iLCJyb2wiOiJyZWRhY3RvciIsImlhdCI6MTczMjAxMzk0Mn0.oERo5mdRYkIAT3lAOQ4EC7yDiBmASNcdR9KjW8ns4CY
-@tokenSuscriptor = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OTUsIm5vbWJyZSI6InN1c2NyaXB0b3IiLCJlbWFpbCI6ImphaW1lcGF2b25wQGdtYWlsLmNvbSIsInJvbCI6InN1c2NyaXB0b3IiLCJpYXQiOjE3MzIxNzk5NzV9.C_TDz2Ypqm4Py1kuFmxweCeYRu74_RQrhhXVrh1iTwY
+@tokenSuscriptor = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Mywibm9tYnJlIjoic3VzY3JpcHRvciIsImVtYWlsIjoiamFpbWVwYXZvbnBAZ21haWwuY29tIiwicm9sIjoic3VzY3JpcHRvciIsImlhdCI6MTczMjE4NjU2OH0.fIX2Svs31GJ6EUkvTbL0eLn_2n1EMbEl6UQyXJ6BLWs
 
 
 ### ----------------------Peticiones CATEGORIAS------------
@@ -154,7 +154,7 @@ Content-Type: application/json
 }
 
 ### Activar suscriptor 
-GET {{host}}/api/suscriptores/activar/95/1
+GET {{host}}/api/suscriptores/activar/3/1
 Content-Type: application/json
 Authorization: {{tokenSuscriptor}}
 

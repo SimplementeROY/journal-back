@@ -83,6 +83,7 @@ const activarSuscriptor = async (req, res) => {
     //const token = req.params.token;
     const id = req.params.id;
     const activo = req.params.activo;
+    console.log("____________BACK activarSuscriptor: ", id, " - ", activo);
 
     try {
         const result = await activateSuscriptorPorId(activo, id);
