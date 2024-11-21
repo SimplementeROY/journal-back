@@ -7,7 +7,7 @@ const { validarExisteEmailUsuario, validarToken } = require('../../utils/middelw
 
 enrutador.get("/editores", validarToken, getUsuariosEditores);
 enrutador.get("/", validarToken, getUsuarios);
-enrutador.get("/:id", validarToken, getUsuarioPorId);
+enrutador.get("/usuario", validarToken, getUsuarioPorId);
 
 enrutador.post("/", validarToken, validarExisteEmailUsuario, registrarUsuario);
 enrutador.post("/login", loginUsuario);
