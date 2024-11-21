@@ -25,18 +25,25 @@ const validarToken = async (req, res, next) => {
     next();
 }
 
-// OJO <----- Está SIN codigo, pero quizá se tendría que hacer esta funcion en vez de reutilizar validarToken, lo veremos mas adelante
 const validarTokenSuscriptor = async (req, res, next) => {
-    if (!req.headers['authorization']) {
+    console.log("___________BACK midelware validar token, header:", req.headers);
+
+    if (!req.headers['authsuscriptor']) {
+        console.log("___________BACK no encuentra el token");
         return res.status(403).json({ mensaje: "Es necesario el token de autenticación de suscriptor." });
     }
-    const token_cabecera = req.headers['authorization'];//cogemos el token de la cabecera
+    const token_cabecera = req.headers['authsuscriptor'];//cogemos el token de la cabecera
+    console.log("___________BACK recojo token cabecera", token_cabecera);
     const firmaToken = process.env.FIRMATOKEN;//cogemos la llave de la variable de entorno
     try {//OJO usamos un tryCath porque la forma de trabajar del .verify devuelve una EXCEPCION
+        console.log("___________BACK descifra token 1");
         tokenDescifrado = jwtokens.verify(token_cabecera, firmaToken);//primer parametro el token, segundo la llave 
+
     } catch (error) {
+        console.log("___________BACK token es incorrecto");
         return res.status(403).json({ mensaje: "El token de sucriptor es incorrecto." });
     }
+
     const suscriptor = await seleccionarSuscriptorPorId(tokenDescifrado.id)//en el token descifrado tenemos el nombre y el id del usuario
     if (!suscriptor) return res.status(404).json({ mensaje: "El suscriptor no existe" });
     //Ahora incrusto en la peticion TODO EL USUARIO que he buscado antes, me invento una nueva propiedad en req de modo que en cualquier lugar tendré el usuario que se ha logado
