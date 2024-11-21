@@ -14,12 +14,12 @@ const seleccionarSuscriptorPorId = async (id) => {
     return resultado[0];
 }
 
-const seleccionarSuscriptorPorEmail = async (email) => {
+const seleccionarSuscriptorPorEmail = async (email) => {//Devuelve false si no existe
     const [resultado] = await poolSQL.query(
         'SELECT * FROM suscriptores WHERE email = ?',
         [email]
     );
-    return resultado[0];
+    return resultado[0] ? resultado[0] : false;
 }
 
 const insertarSuscriptor = async (email) => {

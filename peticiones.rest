@@ -111,10 +111,10 @@ Content-Type: application/json
 Authorization: {{tokenRedactor}}
 
 {
-  "nombre": "admin",
-  "email": "admin@gmail.com",
+  "nombre": "editor",
+  "email": "editor@gmail.com",
   "contraseña": "1234",
-  "rol": "admin"
+  "rol": "editor"
 }
 
 ### Actualizar un usuario  // Puede ser redactor o editor
@@ -142,7 +142,7 @@ GET {{host}}/api/suscriptores
 GET {{host}}/api/suscriptores/4
 
 ### Obtener un suscriptor por email --> OJO /email/ 
-GET {{host}}/api/suscriptores/email/jaime@gmail.com
+GET {{host}}/api/suscriptores/email/jaimepavonp@gmail.com
 
 ### Registrar un --------NUEVO-------- suscriptor
 POST {{host}}/api/suscriptores

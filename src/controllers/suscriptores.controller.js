@@ -28,6 +28,8 @@ const getSuscriptorPorEmail = async (req, res) => {
 }
 
 const registrarSuscriptor = async (req, res) => {
+    console.log("___________________________Entro en nuevo suscriptor");
+
     try {
         const { email, categorias } = req.body;
         const respuesta = await insertarSuscriptor(email);
@@ -83,8 +85,6 @@ const activarSuscriptor = async (req, res) => {
     //const token = req.params.token;
     const id = req.params.id;
     const activo = req.params.activo;
-    console.log("____________BACK activarSuscriptor: ", id, " - ", activo);
-
     try {
         const result = await activateSuscriptorPorId(activo, id);
 
@@ -105,7 +105,6 @@ const actualizarSuscriptor = async (req, res) => {
         const id = req.params.id;
         const { email, categorias } = req.body;
         const suscriptorFound = await seleccionarSuscriptorPorEmail(email);
-        console.log("_________________Email, categorias: ", email, categorias);
 
         if (suscriptorFound && suscriptorFound.id != id) {
             return res.status(404).json({ mensaje: `No se puede actualizar el usuario, el correo ${email} ya está en uso por otro usuario.` });

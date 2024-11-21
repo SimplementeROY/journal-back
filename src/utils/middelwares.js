@@ -26,21 +26,15 @@ const validarToken = async (req, res, next) => {
 }
 
 const validarTokenSuscriptor = async (req, res, next) => {
-    console.log("___________BACK midelware validar token, header:", req.headers);
-
     if (!req.headers['authsuscriptor']) {
-        console.log("___________BACK no encuentra el token");
         return res.status(403).json({ mensaje: "Es necesario el token de autenticación de suscriptor." });
     }
     const token_cabecera = req.headers['authsuscriptor'];//cogemos el token de la cabecera
-    console.log("___________BACK recojo token cabecera", token_cabecera);
     const firmaToken = process.env.FIRMATOKEN;//cogemos la llave de la variable de entorno
     try {//OJO usamos un tryCath porque la forma de trabajar del .verify devuelve una EXCEPCION
-        console.log("___________BACK descifra token 1");
         tokenDescifrado = jwtokens.verify(token_cabecera, firmaToken);//primer parametro el token, segundo la llave 
 
     } catch (error) {
-        console.log("___________BACK token es incorrecto");
         return res.status(403).json({ mensaje: "El token de sucriptor es incorrecto." });
     }
 
@@ -74,7 +68,10 @@ const validarExisteEmailSuscriptor = async (req, res, next) => {
     const correo = req.body.email;
     // //busco el mail en la bd , si NO existe el mail en la bd sino lo saco de la funcion
     const emailExiste = await seleccionarSuscriptorPorEmail(correo);
-    if (emailExiste) return res.status(404).json({ mensaje: `El email de suscriptor ${correo} ya existe en la base de datos.` });
+    if (emailExiste) {
+        console.log(`----->> El email de suscriptor ${correo} ya existe en la base de datos.`);
+        return res.status(404).json({ mensaje: `El email de suscriptor ${correo} ya existe en la base de datos.` });
+    }
     // //si no ha entrado en ningun condicional de los anteriores para adelante
     next();
 }
