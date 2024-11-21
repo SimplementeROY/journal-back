@@ -24,7 +24,7 @@ Authorization: {{tokenRedactor}}
 GET {{host}}/api/noticias/?seccion=secundario&categoria=deportes
 
 ###
-GET {{host}}/api/noticias/?seccion=principal
+GET {{host}}/api/noticias/?seccion=destacado&num=2
 
 ###
 GET {{host}}/api/noticias/?slug=peliculas-esperadas-2024
@@ -33,7 +33,7 @@ GET {{host}}/api/noticias/?slug=peliculas-esperadas-2024
 GET {{host}}/api/noticias/ultimas/?num=4
 
 ###
-GET {{host}}/api/noticias/busqueda/2024
+GET {{host}}/api/noticias/busqueda/2024?num=3
 
 ###
 GET {{host}}/api/noticias/busqueda/2024&startups
@@ -52,7 +52,7 @@ Authorization: {{tokenRedactor}}
   "redactor_id": 1,
   "editor_id": 4,
   "categoria_id": 1,
-  "estado": "borrador",
+  "estado": "publicado",
   "importancia": "media",
   "cambios": null,
   "slug": "turismo-montana-economia"

@@ -28,12 +28,15 @@ const getNoticiasDeUsuario = async (req, res, next) => {
 const getNoticiasPorQueryParams = async (req, res, next) => {
     try {
         const { seccion, categoria, slug } = req.query;
+        const num = Number(req.query.num);
+        // Si num es NaN, el valor es 10 por defecto
+        const numeroNoticias = isNaN(num) ? 10 : Math.abs(num);
         if (seccion && categoria) {
             const [idCategoria] = await modelCategorias.getIdCategoriaPorSlug(categoria);
-            const resultado = await modelNoticias.seleccionarNoticiasPorSeccionCategoria(seccion, idCategoria.id);
+            const resultado = await modelNoticias.seleccionarNoticiasPorSeccionCategoria(seccion, idCategoria.id, numeroNoticias);
             return procesarResultadoArray(resultado, res, 'No se han encontrado noticias en la base de datos');
         } else if (seccion) {
-            const resultado = await modelNoticias.seleccionarNoticiasPorSeccion(seccion);
+            const resultado = await modelNoticias.seleccionarNoticiasPorSeccion(seccion, numeroNoticias);
             return procesarResultadoArray(resultado, res, 'No se han encontrado noticias en la base de datos');
         } else if (slug) {
             const resultado = await modelNoticias.seleccionarNoticiaPorSlug(slug);
@@ -60,10 +63,13 @@ const getUltimasNoticias = async (req, res, next) => {
 
 const getNoticiasPorBusqueda = async (req, res, next) => {
     const { busqueda } = req.params;
+    const num = Number(req.query.num);
+    // Si num es NaN, el valor es 10 por defecto
+    const numeroNoticias = isNaN(num) ? 10 : Math.abs(num);
     const palabras = busqueda.split('&').map(palabra => `%${palabra.trim()}%`);
     const condiciones = palabras.map(() => '(titular like ? or texto like ?)').join(' and ');
     try {
-        const resultado = await modelNoticias.seleccionarNoticiasPorBusqueda(condiciones, palabras);
+        const resultado = await modelNoticias.seleccionarNoticiasPorBusqueda(condiciones, palabras, numeroNoticias);
         return procesarResultadoArray(resultado, res, 'No existen noticias en la base de datos que contengan los términos de búsqueda proporcionados');
     } catch (error) {
         next(error);

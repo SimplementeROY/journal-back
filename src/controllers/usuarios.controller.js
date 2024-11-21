@@ -11,8 +11,8 @@ const getUsuarios = async (req, res) => {
 
 // Obtener un usuario por id
 const getUsuarioPorId = async (req, res) => {
-    const { id } = req.params;
-    const usuario = await seleccionarUsuarioPorId(id);
+    const { usuarioIncrustado } = req;
+    const usuario = await seleccionarUsuarioPorId(usuarioIncrustado.id);
     res.json(usuario);
 }
 
