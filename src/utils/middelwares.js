@@ -2,7 +2,7 @@ require('dotenv').config(); //libreria para traer variables de entorno
 const jwtokens = require("jsonwebtoken");
 const isemail = require("isemail");
 const { seleccionarUsuarioPorId, seleccionarUsuarioPorEmail } = require('../models/usuarios.model');
-const { seleccionarSuscriptorPorEmail } = require('../models/suscriptores.model');
+const { seleccionarSuscriptorPorId, seleccionarSuscriptorPorEmail } = require('../models/suscriptores.model');
 
 const validarToken = async (req, res, next) => {
     //comprobar si el token viene incluido en la cabecera Authorization
@@ -22,6 +22,25 @@ const validarToken = async (req, res, next) => {
     if (!usuario) return res.status(404).json({ mensaje: "El usuario no existe" });
     //Ahora incrusto en la peticion TODO EL USUARIO que he buscado antes, me invento una nueva propiedad en req de modo que en cualquier lugar tendré el usuario que se ha logado
     req.usuarioIncrustado = usuario; //incrusto al req el usuario entero
+    next();
+}
+
+// OJO <----- Está SIN codigo, pero quizá se tendría que hacer esta funcion en vez de reutilizar validarToken, lo veremos mas adelante
+const validarTokenSuscriptor = async (req, res, next) => {
+    if (!req.headers['authorization']) {
+        return res.status(403).json({ mensaje: "Es necesario el token de autenticación de suscriptor." });
+    }
+    const token_cabecera = req.headers['authorization'];//cogemos el token de la cabecera
+    const firmaToken = process.env.FIRMATOKEN;//cogemos la llave de la variable de entorno
+    try {//OJO usamos un tryCath porque la forma de trabajar del .verify devuelve una EXCEPCION
+        tokenDescifrado = jwtokens.verify(token_cabecera, firmaToken);//primer parametro el token, segundo la llave 
+    } catch (error) {
+        return res.status(403).json({ mensaje: "El token de sucriptor es incorrecto." });
+    }
+    const suscriptor = await seleccionarSuscriptorPorId(tokenDescifrado.id)//en el token descifrado tenemos el nombre y el id del usuario
+    if (!suscriptor) return res.status(404).json({ mensaje: "El suscriptor no existe" });
+    //Ahora incrusto en la peticion TODO EL USUARIO que he buscado antes, me invento una nueva propiedad en req de modo que en cualquier lugar tendré el usuario que se ha logado
+    req.suscriptorIncrustado = suscriptor; //incrusto al req el usuario entero
     next();
 }
 
@@ -48,13 +67,14 @@ const validarExisteEmailSuscriptor = async (req, res, next) => {
     const correo = req.body.email;
     // //busco el mail en la bd , si NO existe el mail en la bd sino lo saco de la funcion
     const emailExiste = await seleccionarSuscriptorPorEmail(correo);
-    if (emailExiste) return res.status(404).json({ mensaje: "El email de suscriptor " + correo + " ya existe en la base de datos." });
+    if (emailExiste) return res.status(404).json({ mensaje: `El email de suscriptor ${correo} ya existe en la base de datos.` });
     // //si no ha entrado en ningun condicional de los anteriores para adelante
     next();
 }
 
 module.exports = {
     validarToken,
+    validarTokenSuscriptor,
     validarExisteEmailUsuario,
     validarExisteEmailSuscriptor,
     validarFormatoEmail,

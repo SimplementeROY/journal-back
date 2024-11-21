@@ -2,6 +2,8 @@
 @tokenAdmin=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTMsIm5vbWJyZSI6ImFkbWluIiwiZW1haWwiOiJhZG1pbkBnbWFpbC5jb20iLCJyb2wiOiJhZG1pbiIsImlhdCI6MTczMTg3MDk3OX0.rZhmXH_lNeJp8g9g41dVAtG_C3zLz42-QWYczLL8xcE
 @tokenEditor = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTAsIm5vbWJyZSI6IkphaW1lIiwiZW1haWwiOiJqYWltZUBnbWFpbC5jb20iLCJyb2wiOiJlZGl0b3IiLCJpYXQiOjE3MzE4NzA4MzZ9.ODDSaTvbZQCYkdJSCUliwir_KDjXAyro2yt08E67sHY
 @tokenRedactor = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibm9tYnJlIjoiSnVhbiBQw6lyZXoiLCJlbWFpbCI6Imp1YW4ucGVyZXpAZXhhbXBsZS5jb20iLCJyb2wiOiJyZWRhY3RvciIsImlhdCI6MTczMjAxMzk0Mn0.oERo5mdRYkIAT3lAOQ4EC7yDiBmASNcdR9KjW8ns4CY
+@tokenSuscriptor = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OTUsIm5vbWJyZSI6InN1c2NyaXB0b3IiLCJlbWFpbCI6ImphaW1lcGF2b25wQGdtYWlsLmNvbSIsInJvbCI6InN1c2NyaXB0b3IiLCJpYXQiOjE3MzIxNzk5NzV9.C_TDz2Ypqm4Py1kuFmxweCeYRu74_RQrhhXVrh1iTwY
+
 
 ### ----------------------Peticiones CATEGORIAS------------
 ### GET todas las categorias
@@ -136,15 +138,17 @@ POST {{host}}/api/suscriptores
 Content-Type: application/json
 
 {
-  "email": "ejemplo@yopmail.com",
-  "categorias":[1,2,3,4]
+  "email": "jaimepavonp@gmail.com",
+  "categorias":[1,2,3]
 }
 
 ### Activar suscriptor 
-GET {{host}}/api/suscriptores/activar/33/1
+GET {{host}}/api/suscriptores/activar/95/1
+Content-Type: application/json
+Authorization: {{tokenSuscriptor}}
 
 ### Actualizar un suscriptor 
-PUT {{host}}/api/suscriptores/51
+PUT {{host}}/api/suscriptores/72
 Content-Type: application/json
 
 {
