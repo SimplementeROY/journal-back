@@ -58,6 +58,18 @@ const getUltimasNoticias = async (req, res, next) => {
     }
 }
 
+const getNoticiasPorBusqueda = async (req, res, next) => {
+    const { busqueda } = req.params;
+    const palabras = busqueda.split('&').map(palabra => `%${palabra.trim()}%`);
+    const condiciones = palabras.map(() => '(titular like ? or texto like ?)').join(' and ');
+    try {
+        const resultado = await modelNoticias.seleccionarNoticiasPorBusqueda(condiciones, palabras);
+        return procesarResultadoArray(resultado, res, 'No existen noticias en la base de datos que contengan los términos de búsqueda proporcionados');
+    } catch (error) {
+        next(error);
+    }
+}
+
 const postNoticia = async (req, res, next) => {
     try {
         // Comprobamos si ya existe el slug
@@ -148,6 +160,7 @@ module.exports = {
     getNoticiasDeUsuario,
     getNoticiasPorQueryParams,
     getUltimasNoticias,
+    getNoticiasPorBusqueda,
     postNoticia,
     putNoticia,
     deleteNoticia

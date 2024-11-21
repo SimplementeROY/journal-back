@@ -48,6 +48,15 @@ const seleccionarUltimasNoticias = async (numeroNoticias) => {
     return resultado;
 }
 
+const seleccionarNoticiasPorBusqueda = async (condiciones, palabras) => {
+    const valores = palabras.flatMap(palabra => [palabra, palabra]);
+    const [resultado] = await poolSQL.query(
+        `select * from noticias where ${condiciones} order by fecha_publicacion desc`,
+        valores
+    );
+    return resultado;
+}
+
 const insertarNoticia = async ({ titular, imagen, texto, secciones, fecha_publicacion, redactor_id, editor_id, categoria_id, estado, importancia, cambios, slug }) => {
     const [resultado] = await poolSQL.query(
         'insert into noticias (titular, imagen, texto, secciones, fecha_publicacion, redactor_id, editor_id, categoria_id, estado, importancia, cambios, slug) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
@@ -82,6 +91,7 @@ module.exports = {
     seleccionarNoticiasPorSeccion,
     seleccionarNoticiaPorSlug,
     seleccionarUltimasNoticias,
+    seleccionarNoticiasPorBusqueda,
     insertarNoticia,
     actualizarNoticia,
     borrarNoticia

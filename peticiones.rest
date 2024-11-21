@@ -33,6 +33,12 @@ GET {{host}}/api/noticias/?slug=peliculas-esperadas-2024
 GET {{host}}/api/noticias/ultimas/?num=4
 
 ###
+GET {{host}}/api/noticias/busqueda/2024
+
+###
+GET {{host}}/api/noticias/busqueda/2024&startups
+
+###
 POST {{host}}/api/noticias
 Content-Type: application/json
 Authorization: {{tokenRedactor}}
