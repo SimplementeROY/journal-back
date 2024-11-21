@@ -28,13 +28,11 @@ const getSuscriptorPorEmail = async (req, res) => {
 }
 
 const registrarSuscriptor = async (req, res) => {
-    console.log("___________________________Entro en nuevo suscriptor");
-
     try {
         const { email, categorias } = req.body;
-        const respuesta = await insertarSuscriptor(email);
 
         //_______________________________insertamos suscriptor Y DESPUES insertamos las lineas de tabla suscriptor_categorias (tantas como categorias se ha suscrito)
+        const respuesta = await insertarSuscriptor(email);
         const nuevoInsertado = await seleccionarSuscriptorPorId(respuesta.insertId);
         const insertCat = await insertarSuscriptorCategorias(respuesta.insertId, categorias);
 
@@ -43,7 +41,6 @@ const registrarSuscriptor = async (req, res) => {
         let textoCategorias = "";
         for (categoria of categoriasNom) {
             textoCategorias += `<a href=http://localhost:4200/noticias/${categoria.slug}>${categoria.nombre}</a>, `;
-
         }
         textoCategorias = textoCategorias.slice(0, -2);
 
@@ -71,7 +68,7 @@ const registrarSuscriptor = async (req, res) => {
         enviarEmailSuscriptor(datosEmail);
 
         res.status(201).json({
-            mensaje: "Suscriptor registrado correctamente",
+            mensaje: `Se ha enviado un correo a ${email} para confirmar el alta.`,
             suscriptor: nuevoInsertado
         });
 
@@ -172,6 +169,41 @@ const eliminarSuscriptorPorEmail = async (req, res) => {
     }
 }
 
+const bajaSuscriptor = async (req, res) => {
+    const { email } = req.params;
+    //_______________________________busco si existe el suscriptor
+    const suscriptorFound = await seleccionarSuscriptorPorEmail(email);
+    console.log("_________suscriptorFound: ", suscriptorFound);
+
+    if (suscriptorFound) {
+        console.log("_________suscriptorFound  encontrado asi que entro");
+        //_______________________________Crear token para asegurar la eliminacion de la suscripcion cuando click en el enlace CONFIRMAR en el mail 
+        const nuevoInsertado = {
+            id: suscriptorFound.id,
+            email: email,
+            nombre: "suscriptor",
+            rol: "suscriptor"
+        }
+        const tokenSuscriptor = crearToken(nuevoInsertado);
+
+        //_______________________________Crear email de alta y enviarlo
+        const datosEmail = {
+            para: email,
+            asunto: `BAJA como suscriptor con email ${email} en el periodico upgrade.`,
+            texto: "",
+            textohtml: `<p>Has recibido este correo porque quieres darte de BAJA como suscriptor con email <strong>${email}</strong> en Upgrade Journal.</p>
+             <p>Para confirmar la BAJA de suscripción, haz click en el siguiente enlace:
+              <a href="http://localhost:4200/eliminar_suscriptor/${email}/${tokenSuscriptor}">CONFIRMAR BAJA SUSCRIPCION</a></p>.
+             <p>Si tú no has solicitado esta BAJA ignora este correo.</p>`
+        };
+        enviarEmailSuscriptor(datosEmail);
+        res.json({ mensaje: `Mensaje enviado al suscriptor ${email}`, mailEnviado: true });
+    } else {
+        console.log("_________suscriptorFound no existe");
+        res.json({ mensaje: `El suscriptor ${email} no existe.`, mailEnviado: false });
+    }
+}
+
 module.exports = {
     getSuscriptores,
     getSuscriptorPorId,
@@ -180,5 +212,6 @@ module.exports = {
     actualizarSuscriptor,
     activarSuscriptor,
     eliminarSuscriptorPorId,
-    eliminarSuscriptorPorEmail
+    eliminarSuscriptorPorEmail,
+    bajaSuscriptor
 }

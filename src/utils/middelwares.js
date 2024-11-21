@@ -35,7 +35,7 @@ const validarTokenSuscriptor = async (req, res, next) => {
         tokenDescifrado = jwtokens.verify(token_cabecera, firmaToken);//primer parametro el token, segundo la llave 
 
     } catch (error) {
-        return res.status(403).json({ mensaje: "El token de sucriptor es incorrecto." });
+        return res.status(403).json({ mensaje: "El token de suscriptor es incorrecto." });
     }
 
     const suscriptor = await seleccionarSuscriptorPorId(tokenDescifrado.id)//en el token descifrado tenemos el nombre y el id del usuario

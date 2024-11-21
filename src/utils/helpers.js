@@ -32,7 +32,7 @@ const fechaAHoraLocal = (fechaAntigua) => {
     return fechaNueva;
 }
 
-const enviarEmailNuevaNoticia = async (noticia) => {
+const enviarEmailNuevaNoticia = async (noticia) => { //TODO añadir enlace para la baja del suscriptor en el correo que les llega con las nuevas noticias
     const categoria = await modelCategorias.getUnaCategoriaPorId(noticia.categoria_id);
     const suscriptoresIds = await modelSuscriptoresCategorias.obtenerSuscriptoresAUnaCategoria(noticia.categoria_id);
     for (suscriptor of suscriptoresIds) {

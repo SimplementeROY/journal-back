@@ -170,5 +170,10 @@ Content-Type: application/json
 ### Eliminar un suscriptor POR ID  ---> OJO NO USAR ESTA
 DELETE {{host}}/api/suscriptores/14
 
+
 ### Eliminar un suscriptor POR EMAIL
 DELETE {{host}}/api/suscriptores/email/jaimepavonp@gmail.com
+authSuscriptor: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MCwibm9tYnJlIjoic3VzY3JpcHRvciIsImVtYWlsIjoiamFpbWVwYXZvbnBAZ21haWwuY29tIiwicm9sIjoic3VzY3JpcHRvciIsImlhdCI6MTczMjIxMjE0NX0.A5_3k_gzTJWyCpdzWO4wijmlgH8WhLxBovwydotQLHI
+
+### Baja suscriptor POR EMAIL
+GET {{host}}/api/suscriptores/baja/jaimepavonp@gmail.com
