@@ -5,45 +5,41 @@ SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 
 -- -----------------------------------------------------
--- Schema cms_periodico
+-- Schema sql7746596
 -- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS `sql7746596` DEFAULT CHARACTER SET utf8 ;
+USE `sql7746596`;
 
 -- -----------------------------------------------------
--- Schema cms_periodico
+-- Table `sql7746596`.`usuarios`
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `cms_periodico` DEFAULT CHARACTER SET utf8 ;
-USE `cms_periodico` ;
-
--- -----------------------------------------------------
--- Table `cms_periodico`.`usuarios`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `cms_periodico`.`usuarios` (
+CREATE TABLE IF NOT EXISTS `sql7746596`.`usuarios` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `nombre` VARCHAR(45) NOT NULL,
   `email` VARCHAR(150) NOT NULL,
   `contraseña` VARCHAR(255) NOT NULL,
   `rol` ENUM("admin", "editor", "redactor") NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE)
+  UNIQUE INDEX `email_UNIQUE` (`email` ASC))
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `cms_periodico`.`categoria`
+-- Table `sql7746596`.`categoria`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `cms_periodico`.`categoria` (
+CREATE TABLE IF NOT EXISTS `sql7746596`.`categoria` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `nombre` VARCHAR(45) NOT NULL,
   `slug` VARCHAR(45) NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `slug_UNIQUE` (`slug` ASC) VISIBLE)
+  UNIQUE INDEX `slug_UNIQUE` (`slug` ASC))
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `cms_periodico`.`noticias`
+-- Table `sql7746596`.`noticias`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `cms_periodico`.`noticias` (
+CREATE TABLE IF NOT EXISTS `sql7746596`.`noticias` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `titular` VARCHAR(50) NOT NULL,
   `imagen` VARCHAR(255) NOT NULL,
@@ -58,57 +54,57 @@ CREATE TABLE IF NOT EXISTS `cms_periodico`.`noticias` (
   `cambios` LONGTEXT NULL,
   `slug` VARCHAR(100) NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_noticias_usuarios_idx` (`redactor_id` ASC) VISIBLE,
-  INDEX `fk_noticias_usuarios1_idx` (`editor_id` ASC) VISIBLE,
-  INDEX `fk_noticias_categoria1_idx` (`categoria_id` ASC) VISIBLE,
-  UNIQUE INDEX `slug_UNIQUE` (`slug` ASC) VISIBLE,
+  INDEX `fk_noticias_usuarios_idx` (`redactor_id` ASC),
+  INDEX `fk_noticias_usuarios1_idx` (`editor_id` ASC),
+  INDEX `fk_noticias_categoria1_idx` (`categoria_id` ASC),
+  UNIQUE INDEX `slug_UNIQUE` (`slug` ASC),
   CONSTRAINT `fk_noticias_usuarios`
     FOREIGN KEY (`redactor_id`)
-    REFERENCES `cms_periodico`.`usuarios` (`id`)
+    REFERENCES `sql7746596`.`usuarios` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_noticias_usuarios1`
     FOREIGN KEY (`editor_id`)
-    REFERENCES `cms_periodico`.`usuarios` (`id`)
+    REFERENCES `sql7746596`.`usuarios` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_noticias_categoria1`
     FOREIGN KEY (`categoria_id`)
-    REFERENCES `cms_periodico`.`categoria` (`id`)
+    REFERENCES `sql7746596`.`categoria` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `cms_periodico`.`suscriptores`
+-- Table `sql7746596`.`suscriptores`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `cms_periodico`.`suscriptores` (
+CREATE TABLE IF NOT EXISTS `sql7746596`.`suscriptores` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `email` VARCHAR(150) NOT NULL,
   `activo` TINYINT NOT NULL DEFAULT 0, 
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE)
+  UNIQUE INDEX `email_UNIQUE` (`email` ASC))
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `cms_periodico`.`suscriptores_categoria`
+-- Table `sql7746596`.`suscriptores_categoria`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `cms_periodico`.`suscriptores_categoria` (
+CREATE TABLE IF NOT EXISTS `sql7746596`.`suscriptores_categoria` (
   `suscriptores_id` INT NOT NULL,
   `categoria_id` INT NOT NULL,
   PRIMARY KEY (`suscriptores_id`, `categoria_id`),
-  INDEX `fk_suscriptores_has_categoria_categoria1_idx` (`categoria_id` ASC) VISIBLE,
-  INDEX `fk_suscriptores_has_categoria_suscriptores1_idx` (`suscriptores_id` ASC) VISIBLE,
+  INDEX `fk_suscriptores_has_categoria_categoria1_idx` (`categoria_id` ASC),
+  INDEX `fk_suscriptores_has_categoria_suscriptores1_idx` (`suscriptores_id` ASC),
   CONSTRAINT `fk_suscriptores_has_categoria_suscriptores1`
     FOREIGN KEY (`suscriptores_id`)
-    REFERENCES `cms_periodico`.`suscriptores` (`id`)
+    REFERENCES `sql7746596`.`suscriptores` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_suscriptores_has_categoria_categoria1`
     FOREIGN KEY (`categoria_id`)
-    REFERENCES `cms_periodico`.`categoria` (`id`)
+    REFERENCES `sql7746596`.`categoria` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -119,7 +115,7 @@ SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 
 
-INSERT INTO `cms_periodico`.`usuarios` (`nombre`, `email`, `contraseña`, `rol`)
+INSERT INTO `sql7746596`.`usuarios` (`nombre`, `email`, `contraseña`, `rol`)
 VALUES
 ('Juan Pérez', 'juan.perez@example.com', '$2b$10$Pw3JzGhbmQaaBCEKQFBEvuh9XHUFjtnwnIiCEOmU/LsW0eCctr8uu', 'redactor'),
 ('Ana López', 'ana.lopez@example.com', '$2b$10$qV9dQqNFGVux4A2LdzdN2eZX8iTUG4/oV25eLpYffO91Uegs8D/im', 'editor'),
@@ -129,7 +125,7 @@ VALUES
 ('Silvia Álvarez', 'silvia.alvarez@example.com', '$2b$10$SmVd8scHpdakJuLhV5lLou8qZIHSuGungDHkflxqyRfnrlgjUKntS', 'admin');
 
 
-INSERT INTO `cms_periodico`.`categoria` (`nombre`, `slug`)
+INSERT INTO `sql7746596`.`categoria` (`nombre`, `slug`)
 VALUES
 ('Tecnología', 'tecnologia'),
 ('Deportes', 'deportes'),
@@ -139,7 +135,7 @@ VALUES
 ('Arte', 'arte');
 
 
-INSERT INTO `cms_periodico`.`noticias` 
+INSERT INTO `sql7746596`.`noticias` 
 (`titular`, `imagen`, `texto`, `secciones`, `fecha_publicacion`, `redactor_id`, `editor_id`, `categoria_id`, `estado`, `importancia`, `cambios`, `slug`)
 VALUES
 ('Nueva tecnología en 2024', 'https://cdn.computerhoy.com/sites/navi.axelspringer.es/public/media/image/2023/04/salud-tecnologia-como-pieza-clave-futuro-sector-sanitario-3001438.jpg', '<p>Un avance en la tecnología ha sido presentado, marcando el comienzo de una nueva era en el desarrollo digital. Durante el primer trimestre de 2024, varias empresas líderes en el sector han colaborado para lanzar dispositivos y soluciones que prometen transformar nuestra forma de interactuar con el mundo.</p><p>Entre las innovaciones más destacadas se encuentra un dispositivo portátil de inteligencia artificial que no solo responde a comandos verbales, sino que también predice las necesidades del usuario basándose en patrones de comportamiento. Esta tecnología combina aprendizaje profundo con procesamiento en tiempo real, lo que permite una experiencia fluida y personalizada.</p><p>Además, el auge de la conectividad 5G ha permitido desarrollar ciudades inteligentes más eficientes y sostenibles. Por ejemplo, sistemas de transporte público autónomo ya están operando en algunas metrópolis, gestionando rutas y tiempos con una precisión sin precedentes. Esto no solo mejora la movilidad urbana, sino que también reduce significativamente las emisiones de carbono.</p><p>Otro avance notable es la implementación de hologramas interactivos en el ámbito educativo y empresarial. Estas proyecciones tridimensionales, que ahora son más asequibles y fáciles de usar, están revolucionando las presentaciones, capacitaciones y reuniones a distancia. Empresas tecnológicas han señalado que este será el próximo estándar en comunicación visual.</p><p>Por supuesto, estos avances no están exentos de desafíos. Expertos en ciberseguridad advierten sobre el potencial mal uso de estas tecnologías, especialmente en términos de privacidad y manejo de datos personales. Por ello, se están desarrollando regulaciones más estrictas y herramientas de encriptación avanzadas para proteger a los usuarios.</p><p>A medida que 2024 avanza, queda claro que la tecnología continuará evolucionando a un ritmo vertiginoso, planteando nuevas oportunidades y retos para la sociedad. Lo que antes parecía ciencia ficción, ahora es parte de nuestra realidad cotidiana.</p>

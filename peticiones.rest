@@ -52,7 +52,7 @@ Authorization: {{tokenRedactor}}
   "redactor_id": 1,
   "editor_id": 4,
   "categoria_id": 1,
-  "estado": "publicado",
+  "estado": "borrador",
   "importancia": "media",
   "cambios": null,
   "slug": "turismo-montana-economia"
