@@ -1,10 +1,6 @@
 const tokenator = require("jsonwebtoken");
-
-
 const { getVariasCategorias } = require("../models/categorias.model.js");
-const { obtenerSuscriptores, insertarSuscriptor, seleccionarSuscriptorPorId, deleteSuscriptorPorId,
-    deleteSuscriptorPorEmail, updateSuscriptorPorId, seleccionarSuscriptorPorEmail,
-    activateSuscriptorPorId } = require("../models/suscriptores.model.js");
+const { obtenerSuscriptores, insertarSuscriptor, seleccionarSuscriptorPorId, deleteSuscriptorPorId, deleteSuscriptorPorEmail, updateSuscriptorPorId, seleccionarSuscriptorPorEmail, activateSuscriptorPorId } = require("../models/suscriptores.model.js");
 const { enviarEmailSuscriptor } = require("../utils/email.js");
 const { insertarSuscriptorCategorias, eliminarSuscriptorCategorias } = require("../models/suscriptores_categoria.model.js");
 const { crearToken } = require("../utils/helpers.js");
@@ -52,16 +48,16 @@ const registrarSuscriptor = async (req, res) => {
         //_______________________________Crear email de alta y enviarlo
         const datosEmail = {
             para: nuevoInsertado.email,
-            asunto: `ALTA como suscriptor con email ${nuevoInsertado.email} en el periodico upgrade.`,
-            texto: `Has recibido este correo porque te has dado de ALTA como suscriptor con email <strong>${nuevoInsertado.email}</strong> en Upgrade Journal. Para confirmar la suscripción, haz click en el siguiente enlace: <a href="http://localhost:3000/api/suscriptores/activar/${nuevoInsertado.id}/1">ACTIVAR SUSCRIPCION</a>`,
+            asunto: `Alta como suscriptor con email ${nuevoInsertado.email} en el periodico upgrade.`,
+            texto: `Has recibido este correo porque te has dado de alta como suscriptor con email <strong>${nuevoInsertado.email}</strong> en Upgrade Journal. Para confirmar la suscripción, haz click en el siguiente enlace: <a href="http://localhost:3000/api/suscriptores/activar/${nuevoInsertado.id}/1">ACTIVAR SUSCRIPCION</a>`,
             textohtml: `
-            <div style="background-color: lavender; padding: 5px; margin: 5px; border: 1px solid black; border-radius: 10px;">
-                <h2 style="padding: 10px; font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: darkblue">Upgrade Journal</h2>
-                <p style="padding: 10px; font-family: Arial; font-size: 18px;">Has recibido este correo porque te has dado de ALTA como suscriptor con email <strong>${nuevoInsertado.email}</strong> en Upgrade Journal.</p>
+            <div style="background-color: white; padding: 5px; margin: 5px; border: 1px solid grey; border-radius: 10px; box-shadow: 0px 5px 5px grey; text-align: center;">
+                <img src="http://localhost:4200/images/upgradejournallogo.png"><h2 style="padding: 10px; font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Upgrade Journal</h2>
+                <p style="padding: 10px; font-family: Arial; font-size: 18px;">Has recibido este correo porque te has dado de <strong>alta como suscriptor</strong> con email <strong>${nuevoInsertado.email}</strong> en Upgrade Journal.</p>
                 <p style="padding: 10px; font-family: Arial; font-size: 18px;">Categorias dadas de alta en la suscripción: ${textoCategorias}.</p>
                 <p style="padding: 10px; font-family: Arial; font-size: 18px;">Para confirmar la suscripción, haz click en el siguiente enlace:
-                <div style="display: flex; justify-content: center; align-items: center; font-weight: 400; color: #fff; background-color: darkblue; border: 1px solid darkblue; max-width: 15.625rem; padding: 0.375rem 0.75rem; margin: 0 auto 1.25rem auto; font-size: 1rem; line-height: 1.5; border-radius: 0.25rem; transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;">
-                    <a href="http://localhost:4200/activar/${nuevoInsertado.id}/1/${tokenSuscriptor}" style="text-decoration: none; color: white; padding: 10px; font-family: Arial; font-size: 18px; font-style: italic;">ACTIVAR SUSCRIPCION</a></p>
+                <div style="display: flex; justify-content: center; align-items: center; font-weight: 400; color: #fff; background-color: black; border: 1px solid grey; max-width: 15.625rem; padding: 0.375rem 0.75rem; margin: 0 auto 1.25rem auto; font-size: 1rem; line-height: 1.5; border-radius: 0.25rem; transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;">
+                    <a href="http://localhost:4200/activar/${nuevoInsertado.id}/1/${tokenSuscriptor}" style="text-decoration: none; color: white; padding: 5px; font-family: Arial; font-size: 18px; font-style: italic;">ACTIVAR SUSCRIPCION</a></p>
                 </div>
             </div>`,
         };// ----->> OJO ---->> la linea 64 contiene /1/elTokenCreadoDesdeElBack DONDE el 1 es el valor que se le pasará al campo "activo" de la tabla suscriptores, de modo que si se le pasara un 0 lo que se haría es inactivar
@@ -155,9 +151,14 @@ const eliminarSuscriptorPorEmail = async (req, res) => {
 
         const datosEmail = {
             para: email,
-            asunto: `BAJA como suscriptor con email ${email} en el periodico upgrade.`,
-            texto: `Hola, has recivido este correo porque te has dado de BAJA como suscriptor con email ${email} en el periodico upgrade.`,
-            textohtml: `<p>Hola, has recivido este correo porque te has dado de BAJA como suscriptor con email <strong> ${email} </strong> en el periodico upgrade.</p>`
+            asunto: `Baja como suscriptor con email ${email} en el periodico upgrade.`,
+            texto: `Hola, has recivido este correo porque te has dado de baja como suscriptor con email ${email} en el periodico upgrade.`,
+            textohtml: `<div style="background-color: white; padding: 5px; margin: 5px; border: 1px solid grey; border-radius: 10px; box-shadow: 0px 5px 5px grey; text-align: center;">
+                <h2 style="padding: 10px; font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Upgrade Journal</h2>
+                <p style="padding: 10px; font-family: Arial; font-size: 18px;">Hola, has recivido este correo porque te has <strong>dado de baja</strong> como suscriptor con email <strong> ${email} </strong> en nuestro periodico Upgrade Journal.</p>
+                <p style="padding: 10px; font-family: Arial; font-size: 18px;">¡Pero recuerda que siempre serás bienvenido de nuevo!</p>
+            </div>`
+            //textohtml: `<p>Hola, has recivido este correo porque te has dado de BAJA como suscriptor con email <strong> ${email} </strong> en el periodico upgrade.</p>`
         };
         enviarEmailSuscriptor(datosEmail);
 
@@ -189,12 +190,19 @@ const bajaSuscriptor = async (req, res) => {
         //_______________________________Crear email de alta y enviarlo
         const datosEmail = {
             para: email,
-            asunto: `BAJA como suscriptor con email ${email} en el periodico upgrade.`,
+            asunto: `Baja como suscriptor con email ${email} en el periodico upgrade.`,
             texto: "",
-            textohtml: `<p>Has recibido este correo porque quieres darte de BAJA como suscriptor con email <strong>${email}</strong> en Upgrade Journal.</p>
-             <p>Para confirmar la BAJA de suscripción, haz click en el siguiente enlace:
-              <a href="http://localhost:4200/eliminar_suscriptor/${email}/${tokenSuscriptor}">CONFIRMAR BAJA SUSCRIPCION</a></p>.
-             <p>Si tú no has solicitado esta BAJA ignora este correo.</p>`
+            textohtml: `<div style="background-color: white; padding: 5px; margin: 5px; border: 1px solid grey; border-radius: 10px; box-shadow: 0px 5px 5px grey; text-align: center;">
+                <h2 style="padding: 10px; font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Upgrade Journal</h2>
+                <p style="padding: 10px; font-family: Arial; font-size: 18px;">Hola, has recivido este correo porque quieres <strong>darte de baja</strong> como suscriptor con email <strong> ${email} </strong> en nuestro periodico Upgrade Journal.</p>
+                <p style="padding: 10px; font-family: Arial; font-size: 18px;">Para confirmar la baja haz click en el siguiente enlace:
+                <div style="display: flex; justify-content: center; align-items: center; font-weight: 400; color: #fff; background-color: black; border: 1px solid grey; max-width: 15.625rem; padding: 0.375rem 0.75rem; margin: 0 auto 1.25rem auto; font-size: 1rem; line-height: 1.5; border-radius: 0.25rem; transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;">
+                    <a href="http://localhost:4200/eliminar_suscriptor/${email}/${tokenSuscriptor}" style="text-decoration: none; color: white; padding: 5px; font-family: Arial; font-size: 18px; font-style: italic;">BAJA DE SUSCRIPCIÓN</a></p>
+                </div>
+                <p style="padding: 10px; font-family: Arial; font-size: 12px; color: grey;">
+                Si no has sido tú quien a solicitado este correo entonces ignora este email y nos harás muy felices.
+                </p>
+            </div>`
         };
         enviarEmailSuscriptor(datosEmail);
         res.json({ mensaje: `Mensaje enviado al suscriptor ${email}`, mailEnviado: true });
