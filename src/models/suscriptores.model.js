@@ -2,49 +2,89 @@ const poolSQL = require("../config/db.js");
 const { getVariasCategorias } = require("./categorias.model.js");
 
 const obtenerSuscriptores = async () => {
-    const resultado = await poolSQL.query('SELECT * FROM suscriptores');
-    return resultado[0];
+    try {
+        const resultado = await poolSQL.query('SELECT * FROM suscriptores');
+        return resultado[0];
+    } catch (error) {
+        console.error('ERROR: ', error.message)
+        throw error;
+    }
 }
 
 const seleccionarSuscriptorPorId = async (id) => {
-    const [resultado] = await poolSQL.query(
-        'SELECT * FROM suscriptores WHERE id = ?',
-        [id]
-    );
-    return resultado[0];
+    try {
+        const [resultado] = await poolSQL.query(
+            'SELECT * FROM suscriptores WHERE id = ?',
+            [id]
+        );
+        return resultado[0];
+    } catch (error) {
+        console.error('ERROR: ', error.message)
+        throw error;
+    }
 }
 
 const seleccionarSuscriptorPorEmail = async (email) => {//Devuelve false si no existe
-    const [resultado] = await poolSQL.query(
-        'SELECT * FROM suscriptores WHERE email = ?',
-        [email]
-    );
-    return resultado[0] ? resultado[0] : false;
+    try {
+        const [resultado] = await poolSQL.query(
+            'SELECT * FROM suscriptores WHERE email = ?',
+            [email]
+        );
+        return resultado[0] ? resultado[0] : false;
+    } catch (error) {
+        console.error('ERROR: ', error.message)
+        throw error;
+    }
 }
 
 const insertarSuscriptor = async (email) => {
-    const [resultado] = await poolSQL.query('INSERT INTO suscriptores (email) VALUES (?)', [email]);
-    return resultado;
+    try {
+        const [resultado] = await poolSQL.query('INSERT INTO suscriptores (email) VALUES (?)', [email]);
+        return resultado;
+    } catch (error) {
+        console.error('ERROR: ', error.message)
+        throw error;
+    }
 }
 
 const updateSuscriptorPorId = (id, email) => {
-    const result = poolSQL.query('UPDATE suscriptores SET email=? WHERE id=?', [email, id]);
-    return result;
+    try {
+        const result = poolSQL.query('UPDATE suscriptores SET email=? WHERE id=?', [email, id]);
+        return result;
+    } catch (error) {
+        console.error('ERROR: ', error.message)
+        throw error;
+    }
 }
 
 const activateSuscriptorPorId = (activo, id) => {
-    const result = poolSQL.query('UPDATE suscriptores SET activo=? WHERE id=?', [activo, id]);
-    return result;
+    try {
+        const result = poolSQL.query('UPDATE suscriptores SET activo=? WHERE id=?', [activo, id]);
+        return result;
+    } catch (error) {
+        console.error('ERROR: ', error.message)
+        throw error;
+    }
 }
 
 const deleteSuscriptorPorId = (id) => {
-    const result = poolSQL.query('DELETE FROM suscriptores WHERE id =?', [id]);
-    return result;
+    try {
+        const result = poolSQL.query('DELETE FROM suscriptores WHERE id =?', [id]);
+        return result;
+    } catch (error) {
+        console.error('ERROR: ', error.message)
+        throw error;
+    }
 }
 
 const deleteSuscriptorPorEmail = (email) => {
-    const result = poolSQL.query('DELETE FROM suscriptores WHERE email =?', [email]);
-    return result;
+    try {
+        const result = poolSQL.query('DELETE FROM suscriptores WHERE email =?', [email]);
+        return result;
+    } catch (error) {
+        console.error('ERROR: ', error.message)
+        throw error;
+    }
 }
 
 module.exports = {
