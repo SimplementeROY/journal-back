@@ -56,8 +56,8 @@ const registrarSuscriptor = async (req, res) => {
                 <p style="padding: 10px; font-family: Arial; font-size: 18px;">Has recibido este correo porque te has dado de <strong>alta como suscriptor</strong> con email <strong>${nuevoInsertado.email}</strong> en Upgrade Journal.</p>
                 <p style="padding: 10px; font-family: Arial; font-size: 18px;">Categorias dadas de alta en la suscripción: ${textoCategorias}.</p>
                 <p style="padding: 10px; font-family: Arial; font-size: 18px;">Para confirmar la suscripción, haz click en el siguiente enlace:
-                <div style="display: flex; justify-content: center; align-items: center; font-weight: 400; color: #fff; background-color: black; border: 1px solid grey; max-width: 15.625rem; padding: 0.375rem 0.75rem; margin: 0 auto 1.25rem auto; font-size: 1rem; line-height: 1.5; border-radius: 0.25rem; transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;">
-                    <a href="https://upgrade-news.netlify.app/activar/${nuevoInsertado.id}/1/${tokenSuscriptor}" style="text-decoration: none; color: white; padding: 5px; font-family: Arial; font-size: 18px; font-style: italic;">ACTIVAR SUSCRIPCION</a></p>
+                <div style="display: flex; justify-content: center; align-items: center; font-weight: 400; color: #fff; background-color: black; border: 1px solid grey; max-width: 15.625rem; padding: 0.375rem 0.75rem; margin: 0 auto 1.25rem auto; font-size: 1rem; line-height: 1.5; border-radius: 0.25rem; transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out; justify-content: center;">
+                    <a href="https://upgrade-news.netlify.app/activar/${nuevoInsertado.id}/1/${tokenSuscriptor}" style="text-decoration: none; color: white; padding: 5px; font-family: Arial; font-size: 18px; font-style: italic; justify-content: center;">ACTIVAR SUSCRIPCION</a></p>
                 </div>
             </div>`,
         };// ----->> OJO ---->> la linea 64 contiene /1/elTokenCreadoDesdeElBack DONDE el 1 es el valor que se le pasará al campo "activo" de la tabla suscriptores, de modo que si se le pasara un 0 lo que se haría es inactivar
@@ -114,8 +114,8 @@ const actualizarSuscriptor = async (req, res) => {
         const datosEmail = {
             para: suscriptor.email,
             asunto: `ACTUALIZACIÓN como suscriptor con email ${suscriptor.email} en el periodico upgrade.`,
-            texto: `Hola, has recivido este correo porque has ACTUALIZADO tus datos como suscriptor con email ${suscriptor.email} en el periodico upgrade.`,
-            textohtml: `<p>Hola, has recivido este correo porque has ACTUALIZADO tus datos como suscriptor con email <strong> ${suscriptor.email} </strong> en el periodico upgrade.</p>`
+            texto: `Hola, has recibido este correo porque has ACTUALIZADO tus datos como suscriptor con email ${suscriptor.email} en el periodico upgrade.`,
+            textohtml: `<p>Hola, has recibido este correo porque has ACTUALIZADO tus datos como suscriptor con email <strong> ${suscriptor.email} </strong> en el periodico upgrade.</p>`
         };
         enviarEmailSuscriptor(datosEmail);
 
@@ -152,13 +152,13 @@ const eliminarSuscriptorPorEmail = async (req, res) => {
         const datosEmail = {
             para: email,
             asunto: `Baja como suscriptor con email ${email} en el periodico upgrade.`,
-            texto: `Hola, has recivido este correo porque te has dado de baja como suscriptor con email ${email} en el periodico upgrade.`,
+            texto: `Hola, has recibido este correo porque te has dado de baja como suscriptor con email ${email} en el periodico upgrade.`,
             textohtml: `<div style="background-color: white; padding: 5px; margin: 5px; border: 1px solid grey; border-radius: 10px; box-shadow: 0px 5px 5px grey; text-align: center;">
                 <img src="https://upgrade-news.netlify.app/images/upgradejournallogo.png">
-                <p style="padding: 10px; font-family: Arial; font-size: 18px;">Hola, has recivido este correo porque te has <strong>dado de baja</strong> como suscriptor con email <strong> ${email} </strong> en nuestro periodico Upgrade Journal.</p>
+                <p style="padding: 10px; font-family: Arial; font-size: 18px;">Hola, has recibido este correo porque te has <strong>dado de baja</strong> como suscriptor con email <strong> ${email} </strong> en nuestro periodico Upgrade Journal.</p>
                 <p style="padding: 10px; font-family: Arial; font-size: 18px;">¡Pero recuerda que siempre serás bienvenido de nuevo!</p>
             </div>`
-            //textohtml: `<p>Hola, has recivido este correo porque te has dado de BAJA como suscriptor con email <strong> ${email} </strong> en el periodico upgrade.</p>`
+            //textohtml: `<p>Hola, has recibido este correo porque te has dado de BAJA como suscriptor con email <strong> ${email} </strong> en el periodico upgrade.</p>`
         };
         enviarEmailSuscriptor(datosEmail);
 
@@ -194,13 +194,13 @@ const bajaSuscriptor = async (req, res) => {
             texto: "",
             textohtml: `<div style="background-color: white; padding: 5px; margin: 5px; border: 1px solid grey; border-radius: 10px; box-shadow: 0px 5px 5px grey; text-align: center;">
                 <img src="https://upgrade-news.netlify.app/images/upgradejournallogo.png">
-                <p style="padding: 10px; font-family: Arial; font-size: 18px;">Hola, has recivido este correo porque quieres <strong>darte de baja</strong> como suscriptor con email <strong> ${email} </strong> en nuestro periodico Upgrade Journal.</p>
+                <p style="padding: 10px; font-family: Arial; font-size: 18px;">Hola, has recibido este correo porque quieres <strong>darte de baja</strong> como suscriptor con email <strong> ${email} </strong> en nuestro periodico Upgrade Journal.</p>
                 <p style="padding: 10px; font-family: Arial; font-size: 18px;">Para confirmar la baja haz click en el siguiente enlace:
-                <div style="display: flex; justify-content: center; align-items: center; font-weight: 400; color: #fff; background-color: black; border: 1px solid grey; max-width: 15.625rem; padding: 0.375rem 0.75rem; margin: 0 auto 1.25rem auto; font-size: 1rem; line-height: 1.5; border-radius: 0.25rem; transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;">
-                    <a href="https://upgrade-news.netlify.app/eliminar_suscriptor/${email}/${tokenSuscriptor}" style="text-decoration: none; color: white; padding: 5px; font-family: Arial; font-size: 18px; font-style: italic;">BAJA DE SUSCRIPCIÓN</a></p>
+                <div style="display: flex; justify-content: center; align-items: center; font-weight: 400; color: #fff; background-color: black; border: 1px solid grey; max-width: 15.625rem; padding: 0.375rem 0.75rem; margin: 0 auto 1.25rem auto; font-size: 1rem; line-height: 1.5; border-radius: 0.25rem; transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out; justify-content: center;">
+                    <a href="https://upgrade-news.netlify.app/eliminar_suscriptor/${email}/${tokenSuscriptor}" style="text-decoration: none; color: white; padding: 5px; font-family: Arial; font-size: 18px; font-style: italic; justify-content: center;">BAJA DE SUSCRIPCIÓN</a></p>
                 </div>
                 <p style="padding: 10px; font-family: Arial; font-size: 12px; color: grey;">
-                Si no has sido tú quien a solicitado este correo entonces ignora este email y nos harás muy felices.
+                Si no has sido tú quien ha solicitado este correo, entonces ignora este email y nos harás muy felices.
                 </p>
             </div>`
         };
