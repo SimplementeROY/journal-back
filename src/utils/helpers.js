@@ -46,12 +46,11 @@ const enviarEmailNuevaNoticia = async (noticia) => { //TODO añadir enlace para 
                 <p style="padding: 10px; font-family: Arial; font-size: 18px;">Se ha publicado una nueva noticia de la categoría ${categoria.nombre} en Upgrade Journal.</p>
                 <div style="background-color: white; padding: 5px; margin: 5px; border: 1px solid grey; border-radius: 10px;">
                     <div style="padding: 20px;">
-                        <a href="http://localhost:4200/noticias/${categoria.slug}/${noticia.slug}" style="text-decoration: none; color: black; padding: 10px; font-family: Arial; font-size: 18px; font-style: italic; font-weight: bold;">${noticia.titular}</a>
+                        <a href="http://localhost:4200/noticias/${categoria.slug}/${noticia.slug}" style="text-decoration: none; color: black; padding: 10px; font-family: Arial; font-size: 20px; font-style: italic; font-weight: bold;">${noticia.titular}</a>
                     </div>
                     <img src="${noticia.imagen}" alt="${noticia.titular}" style="padding: 10px; padding-bottom: 30px; max-width: 80vw;">
-                    <p style="padding: 10px; font-family: Arial; font-size: 12px;">Has recibido este email porque te has dado de alta en la categoría ${categoria.nombre} de Upgrade Journal con el email ${datosSuscriptor.email}</p>
                 </div>
-                
+                <p style="padding: 10px; font-family: Arial; font-size: 12px;">Has recibido este email porque te has dado de alta en la categoría ${categoria.nombre} de Upgrade Journal con el email ${datosSuscriptor.email}</p>
             </div>`,
         };
         enviarEmailSuscriptor(datosEmail);
