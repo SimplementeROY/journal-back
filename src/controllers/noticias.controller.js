@@ -90,8 +90,10 @@ const postNoticia = async (req, res, next) => {
             // Ajustamos la fecha a hora local
             const nuevaNoticiaAjustada = fechaAHoraLocal(nuevaNoticia);
 
-            // Envío de email a los suscriptores de la categoría de la nueva noticia
-            enviarEmailNuevaNoticia(nuevaNoticiaAjustada[0]);
+            // Envío de email a los suscriptores de la categoría de la nueva noticia si está publicada
+            if (nuevaNoticiaAjustada.estado === 'publicado') {
+                enviarEmailNuevaNoticia(nuevaNoticiaAjustada[0]);
+            }
 
             return res.status(201).json(nuevaNoticiaAjustada[0]);
         } else {
@@ -117,6 +119,12 @@ const putNoticia = async (req, res, next) => {
             const nuevaNoticia = await modelNoticias.seleccionarNoticiaPorId(id);
             // Ajustamos la fecha a hora local
             const nuevaNoticiaAjustada = fechaAHoraLocal(nuevaNoticia);
+
+            // Envío de email a los suscriptores de la categoría de la noticia si está publicada
+            if (nuevaNoticiaAjustada.estado === 'publicado') {
+                enviarEmailNuevaNoticia(nuevaNoticiaAjustada[0]);
+            }
+
             return res.status(200).json(nuevaNoticiaAjustada);
         } else {
             res.status(400).json({ message: 'Error: el slug utilizado ya existe en la base de datos' });
