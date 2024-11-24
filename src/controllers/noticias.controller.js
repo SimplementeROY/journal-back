@@ -91,7 +91,7 @@ const postNoticia = async (req, res, next) => {
             const nuevaNoticiaAjustada = fechaAHoraLocal(nuevaNoticia);
 
             // Envío de email a los suscriptores de la categoría de la nueva noticia si está publicada
-            if (nuevaNoticiaAjustada.estado === 'publicado') {
+            if (nuevaNoticiaAjustada[0].estado === 'publicado') {
                 enviarEmailNuevaNoticia(nuevaNoticiaAjustada[0]);
             }
 
@@ -121,7 +121,7 @@ const putNoticia = async (req, res, next) => {
             const nuevaNoticiaAjustada = fechaAHoraLocal(nuevaNoticia);
 
             // Envío de email a los suscriptores de la categoría de la noticia si está publicada
-            if (nuevaNoticiaAjustada.estado === 'publicado') {
+            if (nuevaNoticiaAjustada[0].estado === 'publicado') {
                 enviarEmailNuevaNoticia(nuevaNoticiaAjustada[0]);
             }
 
