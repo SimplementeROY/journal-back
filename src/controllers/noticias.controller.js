@@ -63,14 +63,19 @@ const getUltimasNoticias = async (req, res, next) => {
 
 const getNoticiasPorBusqueda = async (req, res, next) => {
     const { busqueda } = req.params;
+    const { page } = req.query || 1;
+    console.log(page);
+
     const num = Number(req.query.num);
     // Si num es NaN, el valor es 10 por defecto
     const numeroNoticias = isNaN(num) ? 10 : Math.abs(num);
     const palabras = busqueda.split('&').map(palabra => `%${palabra.trim()}%`);
     const condiciones = palabras.map(() => '(titular like ? or texto like ?)').join(' and ');
     try {
-        const resultado = await modelNoticias.seleccionarNoticiasPorBusqueda(condiciones, palabras, numeroNoticias);
-        return procesarResultadoArray(resultado, res, 'No existen noticias en la base de datos que contengan los términos de búsqueda proporcionados');
+        const resultado = await modelNoticias.seleccionarNoticiasPorBusqueda(condiciones, palabras, numeroNoticias, page);
+        console.log(resultado);
+
+        return procesarResultadoArray(resultado, res, 'No existen noticias en la base de datos que contengan los términos de búsqueda proporcionados', page);
     } catch (error) {
         next(error);
     }
@@ -151,11 +156,15 @@ const deleteNoticia = async (req, res, next) => {
     }
 }
 
-const procesarResultadoArray = (resultado, res, mensajeError) => {
+const procesarResultadoArray = (resultado, res, mensajeError, page) => {
     // Ajustamos la fecha a hora local
     const resultadoAjustado = fechaAHoraLocal(resultado);
     if (resultadoAjustado.length === 0) {
         return res.status(404).json({ message: mensajeError });
+    }
+    if (page) {
+        // return res.json({ resultadoAjustado, page })
+        return 'hola'
     }
     return res.json(resultadoAjustado);
 };
