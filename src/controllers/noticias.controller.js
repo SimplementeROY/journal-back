@@ -21,7 +21,7 @@ const getNoticiasDeUsuario = async (req, res, next) => {
         const page = Number(req.query.page) || 1;
 
         const numeroNoticias = Number(req.query.num) || 10;
-        const baseUrl = `${req.protocol}://${req.get('host')}/api/noticias${req.path}`;
+        const baseUrl = `https://${req.get('host')}/api/noticias${req.path}`;
 
 
         const { resultado, total } = await modelNoticias.seleccionarNoticiasPorUsuario(usuarioIncrustado.id, page, numeroNoticias);
