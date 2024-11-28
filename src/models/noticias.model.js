@@ -13,13 +13,18 @@ const seleccionarNoticiaPorId = async (id) => {
     }
 }
 
-const seleccionarNoticiasPorUsuario = async (id) => {
+const seleccionarNoticiasPorUsuario = async (id, page, numeroNoticias) => {
     try {
         const [resultado] = await poolSQL.query(
-            'select * from noticias where redactor_id = ? or editor_id = ? order by fecha_publicacion desc',
+            `SELECT * FROM noticias WHERE redactor_id = ? OR editor_id = ? ORDER BY CASE WHEN estado = 'borrador' THEN 1 WHEN estado = 'revisión' THEN 2 WHEN estado = 'publicado' THEN 3 ELSE 4 END, fecha_publicacion DESC limit ${numeroNoticias} offset ${(page - 1) * numeroNoticias};`,
             [id, id]
         );
-        return resultado;
+
+        const [conteo] = await poolSQL.query(
+            "SELECT count(*) as total FROM noticias WHERE redactor_id = ? OR editor_id = ? ORDER BY CASE WHEN estado = 'borrador' THEN 1 WHEN estado = 'revisión' THEN 2 WHEN estado = 'publicado' THEN 3 ELSE 4 END, fecha_publicacion DESC;",
+            [id, id]
+        );
+        return { resultado, total: conteo[0].total };
     } catch (error) {
         console.error('ERROR: ', error.message)
         throw error;

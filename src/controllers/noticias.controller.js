@@ -18,8 +18,15 @@ const getNoticiasDeUsuario = async (req, res, next) => {
     try {
         // Obtenemos el usuario de la petición, que fue incrustado al validar el token
         const { usuarioIncrustado } = req;
-        const resultado = await modelNoticias.seleccionarNoticiasPorUsuario(usuarioIncrustado.id);
-        return procesarResultadoArray(resultado, res, 'No se han encontrado noticias en la base de datos');
+        const page = Number(req.query.page) || 1;
+
+        const numeroNoticias = Number(req.query.num) || 10;
+        const baseUrl = `${req.protocol}://${req.get('host')}/api/noticias${req.path}`;
+
+
+        const { resultado, total } = await modelNoticias.seleccionarNoticiasPorUsuario(usuarioIncrustado.id, page, numeroNoticias);
+        console.log(total);
+        return procesarResultadoArrayPaginado(resultado, res, 'No se han encontrado noticias en la base de datos', page, baseUrl, total, numeroNoticias);
     } catch (error) {
         next(error);
     }
