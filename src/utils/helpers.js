@@ -42,11 +42,11 @@ const enviarEmailNuevaNoticia = async (noticia) => { //TODO añadir enlace para 
             asunto: `Nueva noticia publicada en ${categoria.nombre} en Upgrade Journal.`,
             texto: `Se ha publicado una nueva noticia de la categoría ${categoria.nombre} en Upgrade Journal.`,
             textohtml: `<div style="background-color: white; padding: 5px; margin: 5px; border: 1px solid grey; border-radius: 10px; box-shadow: 0px 5px 5px grey; text-align: center;">
-                <img src="https://upgrade-news.netlify.app/images/upgradejournallogo.png" style="width: 150px">
+                <img src="https://journal-front-gbtz9g6z6-simplementeroys-projects.vercel.app/images/upgradejournallogo.png" style="width: 150px">
                 <p style="padding: 10px; font-family: Arial; font-size: 18px;">Se ha publicado una nueva noticia de la categoría ${categoria.nombre} en Upgrade Journal.</p>
                 <div style="background-color: white; padding: 5px; margin: 5px; border: 1px solid grey; border-radius: 10px;">
                     <div style="padding: 20px;">
-                        <a href="https://upgrade-news.netlify.app/noticias/${categoria.slug}/${noticia.slug}" style="text-decoration: none; color: black; padding: 10px; font-family: Arial; font-size: 20px; font-style: italic; font-weight: bold;">${noticia.titular}</a>
+                        <a href="https://journal-front-gbtz9g6z6-simplementeroys-projects.vercel.app/noticias/${categoria.slug}/${noticia.slug}" style="text-decoration: none; color: black; padding: 10px; font-family: Arial; font-size: 20px; font-style: italic; font-weight: bold;">${noticia.titular}</a>
                     </div>
                     <img src="${noticia.imagen}" alt="${noticia.titular}" style="padding: 10px; padding-bottom: 30px; max-width: 80vw;">
                 </div>
