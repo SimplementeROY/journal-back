@@ -86,7 +86,11 @@ const seleccionarNoticiasPorBusqueda = async (condiciones, palabras, numeroNotic
             `select n.*, c.slug as slug_cat from noticias n join categoria c on n.categoria_id = c.id where estado = "publicado" and ${condiciones} order by fecha_publicacion desc limit ? offset ${(page - 1) * numeroNoticias}`,
             valores
         );
-        return resultado;
+        const [conteo] = await poolSQL.query(
+            `select count(*) as total from noticias n join categoria c on n.categoria_id = c.id where estado = "publicado" and ${condiciones}`,
+            valores
+        );
+        return { resultado, total: conteo[0].total };
     } catch (error) {
         console.error('ERROR: ', error.message)
         throw error;
@@ -145,5 +149,5 @@ module.exports = {
     seleccionarNoticiasPorBusqueda,
     insertarNoticia,
     actualizarNoticia,
-    borrarNoticia
+    borrarNoticia,
 };

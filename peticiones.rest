@@ -1,4 +1,7 @@
-@host = https://upgrade-news.onrender.com
+# @host = https://upgrade-news.onrender.com
+
+@host = http://localhost:3000
+
 @tokenAdmin = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Niwibm9tYnJlIjoiU2lsdmlhIMOBbHZhcmV6IiwiZW1haWwiOiJzaWx2aWEuYWx2YXJlekBleGFtcGxlLmNvbSIsInJvbCI6ImFkbWluIiwiaWF0IjoxNzMyMTEzNDc2fQ.xT9KectEsbYvA7LVjjK1d7KBiAGWrPx6jGObm53mpGA
 @tokenEditor = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Miwibm9tYnJlIjoiQW5hIEzDs3BleiIsImVtYWlsIjoiYW5hLmxvcGV6QGV4YW1wbGUuY29tIiwicm9sIjoiZWRpdG9yIiwiaWF0IjoxNzMyMTEzMjgwfQ.mx7HIHGzqDokvr3tVnfVDVBN0s3-uEf7pg03AxJ0tmk
 @tokenRedactor = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibm9tYnJlIjoiSnVhbiBQw6lyZXoiLCJlbWFpbCI6Imp1YW4ucGVyZXpAZXhhbXBsZS5jb20iLCJyb2wiOiJyZWRhY3RvciIsImlhdCI6MTczMjAxMzk0Mn0.oERo5mdRYkIAT3lAOQ4EC7yDiBmASNcdR9KjW8ns4CY
@@ -33,10 +36,10 @@ GET {{host}}/api/noticias/?slug=peliculas-esperadas-2024
 GET {{host}}/api/noticias/ultimas/?num=4
 
 ###
-GET {{host}}/api/noticias/busqueda/2024?num=3
+GET {{host}}/api/noticias/busqueda/las?num=30
 
 ###
-GET {{host}}/api/noticias/busqueda/2024&startups
+GET {{host}}/api/noticias/busqueda/b
 
 ###
 POST {{host}}/api/noticias
