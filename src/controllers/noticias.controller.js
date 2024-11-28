@@ -79,7 +79,7 @@ const getNoticiasPorBusqueda = async (req, res, next) => {
     try {
         const { resultado, total } = await modelNoticias.seleccionarNoticiasPorBusqueda(condiciones, palabras, numeroNoticias, page);
 
-        const baseUrl = `${req.protocol}://${req.get('host')}/api/noticias${req.path}`;
+        const baseUrl = `https://${req.get('host')}/api/noticias${req.path}`;
         console.log(baseUrl);
 
         return procesarResultadoArrayPaginado(resultado, res, 'No existen noticias en la base de datos que contengan los términos de búsqueda proporcionados', page, baseUrl, total, numeroNoticias);
